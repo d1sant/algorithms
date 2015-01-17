@@ -1,6 +1,2 @@
-/target$
-.+\.iml$
-\.idea$
-\.DS_Store$
 *.iml
 *.idea
