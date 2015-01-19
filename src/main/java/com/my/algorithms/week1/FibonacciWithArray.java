@@ -34,7 +34,6 @@ public class FibonacciWithArray extends AbstractFibonacci {
             }
             result = fibs[n];
         }
-
         return result;
     }
 }
