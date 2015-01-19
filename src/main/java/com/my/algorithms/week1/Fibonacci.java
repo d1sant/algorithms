@@ -12,7 +12,7 @@ public class Fibonacci {
         System.out.println("Fib 3: " + fib(3));
         System.out.println("Fib 4: " + fib(4));
         System.out.println("Fib 5: " + fib(5));
-        // System.out.println("Fib 5: " + fib(100)); // too slow
+        // System.out.println("Fib 100: " + fib(100)); // too slow
     }
 
     public static long fib(int n) {
