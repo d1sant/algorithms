@@ -1,5 +1,9 @@
 package com.my.algorithms.week1;
 
+/**
+ * Simple implementation of Fibonacci algorithm.
+ * Be aware that it's very slow after numbers greater than 100.
+ */
 public class Fibonacci {
     public static void main(String[] args) {
         System.out.println("Fib 0: " + fib(0));
