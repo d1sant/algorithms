@@ -9,7 +9,7 @@ public class CountingSort {
 
     public static void main(String[] args) {
         final int[] unsorted = {5, 1, 3, 1, 5, 8, 9};
-        sort(unsorted, 9);
+        sort(unsorted, 10);
         System.out.println(Arrays.toString(unsorted));
     }
 
@@ -21,11 +21,11 @@ public class CountingSort {
         for (final int i : unsortedValues) {
             counters[i - 1] = counters[i - 1] + 1;
         }
-        int k = 0;
+        int index = 0;
         for (int counterIndex = 0; counterIndex < maxValue; counterIndex++) {
-            for (int valueIndex = 0; valueIndex < counters[counterIndex]; valueIndex++) {
-                unsortedValues[k] = counterIndex + 1;
-                k++;
+            for (int valueIndex = 0; valueIndex < counters[counterIndex]; valueIndex++) {  // TODO refactor
+                unsortedValues[index] = counterIndex + 1;
+                index++;
             }
         }
     }
