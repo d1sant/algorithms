@@ -7,13 +7,13 @@ import java.util.Scanner;
  */
 public class FibonacciTask1 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         System.out.println(fib(n));
     }
 
-    public static long fib(int n) {
+    public static long fib(final int n) {
         final long result;
         if (n <= 1) {
             result = n;

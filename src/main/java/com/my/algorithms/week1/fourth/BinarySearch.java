@@ -5,7 +5,7 @@ package com.my.algorithms.week1.fourth;
  */
 public class BinarySearch {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final int[] values = {1, 1, 1, 2, 6, 8, 8, 10, 11, 15, 15, 17, 19, 24, 30}; // 15 elements
         System.out.println("Index of 1: " + search(values, 1));
         System.out.println("Index of 7: " + search(values, 7));

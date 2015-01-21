@@ -6,7 +6,7 @@ package com.my.algorithms.week1.second;
  */
 public class FibonacciWithArray extends AbstractFibonacci {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final FibonacciWithArray fib = new FibonacciWithArray();
         fib.print(0);
         fib.print(1);

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class BinarySearchTask2 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final Scanner scanner = new Scanner(System.in);
         final int[] values = parse(scanner.nextLine().split(" "));
@@ -25,7 +25,7 @@ public class BinarySearchTask2 {
         print(result);
     }
 
-    private static int[] parse(String[] stringValues) {
+    private static int[] parse(final String[] stringValues) {
         final int size = Integer.parseInt(stringValues[0]);
         final int[] values = new int[size];
         int index = 0;

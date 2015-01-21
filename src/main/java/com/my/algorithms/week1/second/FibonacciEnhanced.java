@@ -5,7 +5,7 @@ package com.my.algorithms.week1.second;
  */
 public class FibonacciEnhanced extends AbstractFibonacci {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final FibonacciWithArray fib = new FibonacciWithArray();
         fib.print(0);
         fib.print(1);
@@ -21,7 +21,7 @@ public class FibonacciEnhanced extends AbstractFibonacci {
     }
 
     @Override
-    public long fib(int n) {
+    public long fib(final int n) {
         final long result;
         if (n <= 1) {
             result = n;

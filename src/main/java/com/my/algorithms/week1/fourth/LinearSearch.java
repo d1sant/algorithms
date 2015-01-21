@@ -5,7 +5,7 @@ package com.my.algorithms.week1.fourth;
  */
 public class LinearSearch {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final int[] values = {1, 3, 2, 1, 6, 5, 0, 8};
         System.out.println("Index of 8: " + search(values, 8));
         System.out.println("Index of 9: " + search(values, 9));
@@ -13,7 +13,7 @@ public class LinearSearch {
         System.out.println("Index of 1: " + search(values, 1));
     }
 
-    public static int search(int[] values, int searchedValue) {
+    public static int search(final int[] values, final int searchedValue) {
         for (int i = 0; i < values.length; i++) {
             if (values[i] == searchedValue) {
                 return i;
