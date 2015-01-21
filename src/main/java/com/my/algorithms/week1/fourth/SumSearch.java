@@ -1,5 +1,7 @@
 package com.my.algorithms.week1.fourth;
 
+import com.my.algorithms.domain.dto.Pair;
+
 /**
  * Sum search algorithm implementation.
  */
@@ -23,21 +25,5 @@ public class SumSearch {
             }
         }
         return new Pair<Integer, Integer>(-1, -1);
-    }
-
-    private static class Pair<F, S> {
-
-        public final F first;
-        public final S second;
-
-        public Pair(final F first, final S second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        @Override
-        public String toString() {
-            return "{i=" + first + ", j=" + second + "}";
-        }
     }
 }
