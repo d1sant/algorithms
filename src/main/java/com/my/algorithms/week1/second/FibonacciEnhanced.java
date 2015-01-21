@@ -1,4 +1,4 @@
-package com.my.algorithms.week1;
+package com.my.algorithms.week1.second;
 
 /**
  * Enhanced Fibonacci algorithms. Optimized memory usage (3 variables instead of array of long with size of n).
@@ -21,7 +21,7 @@ public class FibonacciEnhanced extends AbstractFibonacci {
     }
 
     @Override
-    long fib(int n) {
+    public long fib(int n) {
         final long result;
         if (n <= 1) {
             result = n;

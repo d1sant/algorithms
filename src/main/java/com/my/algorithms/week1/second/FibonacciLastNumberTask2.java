@@ -1,8 +1,11 @@
-package com.my.algorithms.week1;
+package com.my.algorithms.week1.second;
 
 import java.util.Scanner;
 
-public class FibonacciTask2 {
+/**
+ * Calculates last number of defined fibonacci.
+ */
+public class FibonacciLastNumberTask2 {
 
     public static void main(final String[] args) {
         final Scanner s = new Scanner(System.in);
@@ -18,7 +21,7 @@ public class FibonacciTask2 {
             int fib0 = 0;
             int fib1 = 1;
             int fibLastNum = 0;
-            for (int i = 2; i <=n; i++) {
+            for (int i = 2; i <= n; i++) {
                 fibLastNum = (fib1 + fib0) % 10;
                 fib0 = fib1;
                 fib1 = fibLastNum;

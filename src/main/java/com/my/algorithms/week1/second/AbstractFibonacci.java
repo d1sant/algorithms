@@ -1,4 +1,4 @@
-package com.my.algorithms.week1;
+package com.my.algorithms.week1.second;
 
 /**
  * Abstract helper for Fibonacci algorithms implementation.
@@ -18,5 +18,5 @@ public abstract class AbstractFibonacci {
      * @param n input value
      * @return fibonacci value
      */
-    abstract long fib(final int n);
+    abstract public long fib(final int n);
 }

@@ -1,4 +1,4 @@
-package com.my.algorithms.week1;
+package com.my.algorithms.week1.fourth;
 
 /**
  * Binary search algorithm implementation.
