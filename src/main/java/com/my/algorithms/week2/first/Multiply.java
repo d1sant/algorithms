@@ -1,9 +1,9 @@
-package com.my.algorithms.week2;
+package com.my.algorithms.week2.first;
 
 import java.util.Random;
 
 /**
- * Karazuba multiplication algorithm
+ * Multiplication algorithm with division by two
  */
 public class Multiply {
 
