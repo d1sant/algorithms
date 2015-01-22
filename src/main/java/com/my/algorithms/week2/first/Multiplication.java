@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Multiplication algorithm with division by two
  */
-public class Multiply {
+public class Multiplication {
 
     private static final int MAX = Integer.MAX_VALUE;
     private static final int MIN = MAX >> 1;
@@ -19,16 +19,16 @@ public class Multiply {
         System.out.println("5 * 6 is " + multiply(5, 6));
 
         long now = System.currentTimeMillis();
-        benchmark(true, new Multiplication() {
+        benchmark(false, new Multiplicator() {
             @Override
             public long multiply(int x, int y) {
-                return Multiply.multiply(x, y);
+                return Multiplication.multiply(x, y);
             }
         });
         final long end1 = System.currentTimeMillis() - now;
 
         now = System.currentTimeMillis();
-        benchmark(true, new Multiplication() {
+        benchmark(false, new Multiplicator() {
             @Override
             public long multiply(int x, int y) {
                 return (long) x * y;
@@ -36,11 +36,11 @@ public class Multiply {
         });
         final long end2 = System.currentTimeMillis() - now;
 
-        System.out.println("Karazuba time spent: " + end1);
+        System.out.println("Division by two time spent: " + end1);
         System.out.println("Standart time spent: " + end2);
     }
 
-    private static void benchmark(final boolean print, final Multiplication mult) {
+    private static void benchmark(final boolean print, final Multiplicator mult) {
         for (int i = 0; i < 1000; i++) {
             final int x = randInt(MAX, MIN);
             final int y = randInt(MAX, MIN);
@@ -70,7 +70,7 @@ public class Multiply {
         return result;
     }
 
-    private static interface Multiplication {
+    private static interface Multiplicator {
         long multiply(int x, int y);
     }
 }
