@@ -8,8 +8,27 @@ import java.math.BigInteger;
 public class KaratsubaMultiplication {
 
     public static void main(String[] args) {
+
+        // long to bytes and back
         System.out.println(toLong(toBytes(87774)));
         System.out.println(toLong2(toBytes(87774)));
+
+        // rounding Up and Down
+        System.out.println(roundUp(3, 2) + roundDown(3, 2));
+        System.out.println(roundUp(19, 2) + roundDown(19, 2));
+        System.out.println(roundDown(33333, 2) + roundUp(33333, 2));
+
+        byte b = 4;
+        System.out.println(b << 1);
+
+        byte[] bytes = toBytes(3);
+        System.out.println("length: " + bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            System.out.println("-- before:" + bytes[i]);
+            bytes[i] = (byte) (bytes[i] << 1);
+            System.out.println("-- after:" + bytes[i]);
+        }
+        System.out.println(toLong(bytes));
     }
 
     public static long multiply(final int x, final int y) {
@@ -22,14 +41,16 @@ public class KaratsubaMultiplication {
         if (n == 1) {
             result = new BigInteger(1, x).multiply(new BigInteger(1, y)).toByteArray();
         } else {
+            final int nUp = roundUp(n, 2);
+            final int nDown = roundDown(n, 2);
             final byte[] xl;
             final byte[] xr;
             final byte[] yl;
             final byte[] yr;
 
-            final byte[] p1 = new byte[0];
-            final byte[] p2 = new byte[0];
-            final byte[] p3 = new byte[0];
+            final byte[] p1 = new byte[0]; // multiply(...);
+            final byte[] p2 = new byte[0]; // multiply(...);
+            final byte[] p3 = new byte[0]; // multiply(...);
 
             result = new byte[0]; // p1 << (n / 2) + ((p3 - p1 - p2) << (n / 2)) + p2;
         }
@@ -64,5 +85,13 @@ public class KaratsubaMultiplication {
             result += ((long) bytes[i] & 0xffL) << (8 * i);
         }
         return result;
+    }
+
+    private static int roundUp(int num, int divisor) {
+        return (num + divisor - 1) / divisor;
+    }
+
+    private static int roundDown(int num, int divisor) {
+        return (num + divisor - 2) / divisor;
     }
 }
