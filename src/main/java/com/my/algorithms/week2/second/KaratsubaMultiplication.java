@@ -18,6 +18,10 @@ public class KaratsubaMultiplication {
         System.out.println(roundUp(19, 2) + roundDown(19, 2));
         System.out.println(roundDown(33333, 2) + roundUp(33333, 2));
 
+        // rounding mixed with intrinsic rounding
+        System.out.println(roundUp(9, 2) + 9 / 2); // java does round down as default behaviour
+        System.out.println(9 / 2 + roundDown(9, 2)); // incorrect
+
         byte b = 4;
         System.out.println(b << 1);
 
@@ -79,6 +83,7 @@ public class KaratsubaMultiplication {
      * @param bytes array of bytes
      * @return long value
      */
+    @Deprecated
     private static long toLong2(final byte[] bytes) {
         long result = 0;
         for (int i = 0; i < bytes.length; i++) {
@@ -91,6 +96,13 @@ public class KaratsubaMultiplication {
         return (num + divisor - 1) / divisor;
     }
 
+    /**
+     * Useless implementation cause java does it by default
+     * @param num values to divide
+     * @param divisor divisor value
+     * @return rounded by down value after division
+     */
+    @Deprecated
     private static int roundDown(int num, int divisor) {
         return (num + divisor - 2) / divisor;
     }
