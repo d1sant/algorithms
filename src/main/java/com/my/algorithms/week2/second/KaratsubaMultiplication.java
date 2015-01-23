@@ -7,7 +7,7 @@ import java.math.BigInteger;
  */
 public class KaratsubaMultiplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         // long to bytes and back
         System.out.println(toLong(toBytes(87774)));
@@ -25,13 +25,28 @@ public class KaratsubaMultiplication {
         byte b = 4;
         System.out.println(b << 1);
 
-        byte[] bytes = toBytes(3);
+        byte[] bytes = toBytes(128);
         System.out.println("length: " + bytes.length);
+        final StringBuilder before = new StringBuilder();
+        final StringBuilder after = new StringBuilder();
+        byte rest = 0;
         for (int i = 0; i < bytes.length; i++) {
-            System.out.println("-- before:" + bytes[i]);
-            bytes[i] = (byte) (bytes[i] << 1);
-            System.out.println("-- after:" + bytes[i]);
+            before.append(bytes[i] + " ");
+            final short updated = (short) (bytes[i] << 1);
+            if (updated > 127) {
+                rest = (byte) (updated - 127);
+                bytes[i] = 127;
+            } else if ((updated + rest) > 127) {
+                rest = (byte) (updated + rest - 127);
+                bytes[i] = 127;
+            } else {
+                bytes[i] = (byte) updated;
+                rest = 0;
+            }
+            after.append(bytes[i] + " ");
         }
+        System.out.println("Before: " + before.toString());
+        System.out.println("After: " + after.toString());
         System.out.println(toLong(bytes));
     }
 
@@ -92,7 +107,7 @@ public class KaratsubaMultiplication {
         return result;
     }
 
-    private static int roundUp(int num, int divisor) {
+    private static int roundUp(final int num, final int divisor) {
         return (num + divisor - 1) / divisor;
     }
 
@@ -103,7 +118,7 @@ public class KaratsubaMultiplication {
      * @return rounded by down value after division
      */
     @Deprecated
-    private static int roundDown(int num, int divisor) {
+    private static int roundDown(final int num, final int divisor) {
         return (num + divisor - 2) / divisor;
     }
 }
