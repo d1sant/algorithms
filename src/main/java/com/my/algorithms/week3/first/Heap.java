@@ -1,49 +1,20 @@
 package com.my.algorithms.week3.first;
 
-public class Heap {
-
-    public static void main(final String[] args) {
-        final Heap heap = new Heap();
-    }
-
-    /**
-     * Extracts element with max priority.
-     * @return value of element;
-     */
-    public int extract() {
-        return -1; // TODO implement me
-    }
+/**
+ * API for heap implementations.
+ * @param <T> stored value type.
+ */
+public interface Heap<T> {
 
     /**
-     * Insert value to the heap.
-     * @param value value of element
+     * Extracts max/min (depends on specific implementation) element from heap.
+     * @return value object with type of T
      */
-    public void insert(final int value) {
-        // TODO implement me
-    }
+    T extract();
 
-    private void siftUp(Node node) {
-        // TODO implement me
-    }
-
-    private void siftDown(Node node) {
-        // TODO implement me
-    }
-
-    private static class Node {
-        private Node root;
-        private Node left;
-        private Node right;
-
-        private Node(Node root) {
-            this.root = root;
-        }
-
-        private Node(Node root, Node left, Node right) {
-            this.root = root;
-            this.left = left;
-            this.right = right;
-        }
-    }
-
+    /**
+     * Inserts value to heap in correct place according to max/min priority (depends on specific implementation)
+     * @param value value to be inserted
+     */
+    void insert(T value);
 }
