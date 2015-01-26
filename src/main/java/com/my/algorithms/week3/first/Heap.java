@@ -31,18 +31,18 @@ public class Heap {
     }
 
     private static class Node {
-        private Node parent;
-        private Node leftLeaf;
-        private Node rightLeaf;
+        private Node root;
+        private Node left;
+        private Node right;
 
-        private Node(Node parent) {
-            this.parent = parent;
+        private Node(Node root) {
+            this.root = root;
         }
 
-        private Node(Node parent, Node leftLeaf, Node rightLeaf) {
-            this.parent = parent;
-            this.leftLeaf = leftLeaf;
-            this.rightLeaf = rightLeaf;
+        private Node(Node root, Node left, Node right) {
+            this.root = root;
+            this.left = left;
+            this.right = right;
         }
     }
 
