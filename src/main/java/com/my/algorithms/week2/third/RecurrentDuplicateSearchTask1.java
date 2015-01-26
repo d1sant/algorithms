@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Recurrent search of duplicates. Now it's not implemented as it supposed.
+ */
 public class RecurrentDuplicateSearchTask1 {
 
     public static void main(final String[] args) {
