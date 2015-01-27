@@ -58,6 +58,15 @@ public class ArrayHeap implements Heap<Integer> {
         System.out.println("Initial heap: " + Arrays.toString(heapSiftDown.getHeap()));
         System.out.println("Sifted down to index: " + heapSiftDown.siftDown(0));
         System.out.println("Sifted down heap: " + Arrays.toString(heapSiftDown.getHeap()) + "\n");
+
+        final int[] valuesExtract = {1, 2, 3, 4, 5, 6, 7};
+        final ArrayHeap heapExtract = new ArrayHeap(valuesExtract);
+        System.out.println("Initial heap: " + Arrays.toString(heapExtract.getHeap()));
+        for (int i = 1; i <= 7; i++) {
+            System.out.println("Extracted value: " + heapExtract.extract());
+        }
+        System.out.println("Extracted heap length: " + heapExtract.lastIndex);
+        System.out.println("Extracted heap: " + Arrays.toString(heapExtract.getHeap()) + "\n");
     }
 
     @Override
@@ -85,6 +94,7 @@ public class ArrayHeap implements Heap<Integer> {
     public Integer extract() {
         final Integer result = heap[0];
         heap[0] = heap[lastIndex];
+        heap[lastIndex] = 0; // TODO Change it to null after modifying base storage
         lastIndex--;
         if (heap[0] > heap[1] || heap[0] > heap[2]) {
             siftDown(0);
@@ -108,39 +118,10 @@ public class ArrayHeap implements Heap<Integer> {
         return childIndex;
     }
 
-    private int siftDownInit(final int index) {
-        int parentIndex = index;
-        int leftChildIndex = parentIndex * 2;
-        int rightChildIndex = parentIndex * 2 + 1;
-        Integer parent = heap[parentIndex];
-        Integer leftChild = heap[leftChildIndex];
-        Integer rightChild = heap[rightChildIndex];
-        while (((parent > leftChild || parent > rightChild) && rightChildIndex <= lastIndex) || leftChildIndex == lastIndex) {
-            if (rightChildIndex <= lastIndex) {
-                if (leftChild >= rightChild) {
-                    swap(parentIndex, rightChildIndex);
-                    parentIndex = rightChildIndex;
-                } else {
-                    swap(parentIndex, leftChildIndex);
-                    parentIndex = leftChildIndex;
-                }
-            } else if (parent > leftChild) {
-                swap(parentIndex, leftChildIndex);
-                parentIndex = leftChildIndex;
-            }
-            leftChildIndex = parentIndex * 2;
-            rightChildIndex = parentIndex * 2 + 1;
-            parent = heap[parentIndex];
-            leftChild = heap[leftChildIndex];
-            rightChild = heap[rightChildIndex];
-        }
-        return parentIndex;
-    }
-
     private int siftDown(final int index) {
         int parentIndex = index;
         while (true) {
-            int childIndex = parentIndex * 2;
+            int childIndex = parentIndex * 2 + 1;
             if (childIndex > lastIndex) {
                 break;
             }
