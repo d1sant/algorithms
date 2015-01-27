@@ -12,13 +12,14 @@ public class ObjectHeap implements Heap<Integer> {
     /**
      * Insert value to the heap.
      * @param value value of element
+     * @return index of inserted value (might be sifted up)
      */
-    public void insert(final Integer value) {
-        // TODO implement me
+    public int insert(final Integer value) {
+       return -1; // TODO implement me
     }
 
     @Override
-    public void remove(int index) {
+    public void remove(final int index) {
         // TODO implement me
     }
 
@@ -36,15 +37,15 @@ public class ObjectHeap implements Heap<Integer> {
     }
 
     @Override
-    public void change(int index, Integer value) {
+    public void change(final int index, final Integer value) {
         // TODO implement me
     }
 
-    private void siftUp(Node node) {
+    private void siftUp(final Node node) {
         // TODO implement me
     }
 
-    private void siftDown(Node node) {
+    private void siftDown(final Node node) {
         // TODO implement me
     }
 

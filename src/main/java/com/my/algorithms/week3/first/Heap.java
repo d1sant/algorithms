@@ -10,7 +10,7 @@ public interface Heap<T> {
      * Inserts element to heap in correct place according to max/min priority (depends on specific implementation)
      * @param value value to be inserted
      */
-    void insert(final T value);
+    int insert(final T value);
 
     /**
      * Removes element by its index.
