@@ -10,6 +10,24 @@ public class ObjectHeap implements Heap<Integer> {
     }
 
     /**
+     * Insert value to the heap.
+     * @param value value of element
+     */
+    public void insert(final Integer value) {
+        // TODO implement me
+    }
+
+    @Override
+    public void remove(int index) {
+        // TODO implement me
+    }
+
+    @Override
+    public Integer get() {
+        return null;
+    }
+
+    /**
      * Extracts element with max priority.
      * @return value of element;
      */
@@ -17,11 +35,8 @@ public class ObjectHeap implements Heap<Integer> {
         return -1; // TODO implement me
     }
 
-    /**
-     * Insert value to the heap.
-     * @param value value of element
-     */
-    public void insert(final Integer value) {
+    @Override
+    public void change(int index, Integer value) {
         // TODO implement me
     }
 
