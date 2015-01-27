@@ -38,6 +38,8 @@ public class ObjectHeap implements Heap<Integer> {
         private Node left;
         private Node right;
 
+        private Node() {}
+
         private Node(Node root) {
             this.root = root;
         }
