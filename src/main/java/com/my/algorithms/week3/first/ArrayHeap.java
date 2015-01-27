@@ -36,22 +36,28 @@ public class ArrayHeap implements Heap<Integer> {
         System.out.println("New length: " + values.length);
         System.out.println(Arrays.toString(values) + "\n");
 
-        int[] heapValues = {1, 2, 3, 5, 8, 2};
-        final ArrayHeap heap = new ArrayHeap(heapValues);
-        System.out.println("Initial up heap: " + Arrays.toString(heap.getHeap()));
-        System.out.println("Sifted up to index: " + heap.siftUp(5));
-        System.out.println("Sifted up heap: " + Arrays.toString(heap.getHeap()) + "\n");
+        final int[] valuesSiftUp = {1, 2, 3, 5, 8, 2};
+        final ArrayHeap heapSiftUp = new ArrayHeap(valuesSiftUp);
+        System.out.println("Initial heap: " + Arrays.toString(heapSiftUp.getHeap()));
+        System.out.println("Sifted up to index: " + heapSiftUp.siftUp(5));
+        System.out.println("Sifted up heap: " + Arrays.toString(heapSiftUp.getHeap()) + "\n");
 
-        System.out.println("Before insert: " + Arrays.toString(heap.getHeap()));
-        System.out.println("Inserted index: " + heap.insert(2));
-        System.out.println("Inserted index: " + heap.insert(12));
-        System.out.println("Inserted heap: " + Arrays.toString(heap.getHeap()) + "\n");
+        System.out.println("Initial heap: " + Arrays.toString(heapSiftUp.getHeap()));
+        System.out.println("Inserted index: " + heapSiftUp.insert(2));
+        System.out.println("Inserted index: " + heapSiftUp.insert(12));
+        System.out.println("Inserted heap: " + Arrays.toString(heapSiftUp.getHeap()) + "\n");
 
-        final ArrayHeap heapForInsert = new ArrayHeap(15);
+        final ArrayHeap heapInsert = new ArrayHeap(15);
         for (int i = 1; i < 15; i++) {
-            heapForInsert.insert(i);
+            heapInsert.insert(i);
         }
-        System.out.println("Inserted heap: " + Arrays.toString(heapForInsert.getHeap()));
+        System.out.println("Inserted heap: " + Arrays.toString(heapInsert.getHeap()) + "\n");
+
+        final int[] valuesSiftDown = {12, 2, 3, 5, 8, 10};
+        final ArrayHeap heapSiftDown = new ArrayHeap(valuesSiftDown);
+        System.out.println("Initial heap: " + Arrays.toString(heapSiftDown.getHeap()));
+        System.out.println("Sifted down to index: " + heapSiftDown.siftDown(0));
+        System.out.println("Sifted down heap: " + Arrays.toString(heapSiftDown.getHeap()) + "\n");
     }
 
     @Override
@@ -77,7 +83,13 @@ public class ArrayHeap implements Heap<Integer> {
 
     @Override
     public Integer extract() {
-        return null;  // TODO implement me
+        final Integer result = heap[0];
+        heap[0] = heap[lastIndex];
+        lastIndex--;
+        if (heap[0] > heap[1] || heap[0] > heap[2]) {
+            siftDown(0);
+        }
+        return result;
     }
 
     @Override
@@ -89,17 +101,65 @@ public class ArrayHeap implements Heap<Integer> {
         int parentIndex = (index - 1) / 2;
         int childIndex = index;
         while (parentIndex >= 0 && heap[parentIndex] > heap[childIndex]) {
-            final Integer parent = heap[parentIndex];
-            heap[parentIndex] = heap[childIndex];
-            heap[childIndex] = parent;
+            swap(parentIndex, childIndex);
             childIndex = parentIndex;
             parentIndex = (parentIndex - 1) / 2;
         }
         return childIndex;
     }
 
+    private int siftDownInit(final int index) {
+        int parentIndex = index;
+        int leftChildIndex = parentIndex * 2;
+        int rightChildIndex = parentIndex * 2 + 1;
+        Integer parent = heap[parentIndex];
+        Integer leftChild = heap[leftChildIndex];
+        Integer rightChild = heap[rightChildIndex];
+        while (((parent > leftChild || parent > rightChild) && rightChildIndex <= lastIndex) || leftChildIndex == lastIndex) {
+            if (rightChildIndex <= lastIndex) {
+                if (leftChild >= rightChild) {
+                    swap(parentIndex, rightChildIndex);
+                    parentIndex = rightChildIndex;
+                } else {
+                    swap(parentIndex, leftChildIndex);
+                    parentIndex = leftChildIndex;
+                }
+            } else if (parent > leftChild) {
+                swap(parentIndex, leftChildIndex);
+                parentIndex = leftChildIndex;
+            }
+            leftChildIndex = parentIndex * 2;
+            rightChildIndex = parentIndex * 2 + 1;
+            parent = heap[parentIndex];
+            leftChild = heap[leftChildIndex];
+            rightChild = heap[rightChildIndex];
+        }
+        return parentIndex;
+    }
+
     private int siftDown(final int index) {
-        return -1; // TODO implement me
+        int parentIndex = index;
+        while (true) {
+            int childIndex = parentIndex * 2;
+            if (childIndex > lastIndex) {
+                break;
+            }
+            if (childIndex + 1 <= lastIndex) {
+                childIndex = (heap[childIndex] <= heap[(childIndex + 1)]) ? childIndex : childIndex + 1;
+            }
+            if (heap[parentIndex] <= heap[childIndex]) {
+                break;
+            }
+            swap(parentIndex, childIndex);
+            parentIndex = childIndex;
+        }
+        return parentIndex;
+    }
+
+    private void swap(final int fromIndex, final int toIndex) {
+        final Integer to = heap[toIndex];
+        heap[toIndex] = heap[fromIndex];
+        heap[fromIndex] = to;
     }
 
     private int[] getHeap() {
