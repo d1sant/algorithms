@@ -1,4 +1,4 @@
-package com.my.algorithms.week3.first;
+package com.my.algorithms.week3.second;
 
 import java.util.Arrays;
 
