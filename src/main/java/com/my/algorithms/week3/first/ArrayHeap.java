@@ -5,21 +5,23 @@ import java.util.Arrays;
 /**
  * Heap algorithm implementation based on array storage.
  * In order to extend intrinsic array we need create new one with doubled size and copy elements from old array.
+ * TODO refactor it using http://stackoverflow.com/questions/18241192/implement-heap-using-a-binary-tree
  */
 public class ArrayHeap implements Heap<Integer> {
 
     private static final int INITIAL_HEAP_SIZE = 100;
     private static final int RESIZE_FACTOR = 2;
 
-    private int[] heap = new int[INITIAL_HEAP_SIZE];
-    private int lastIndex = -1;
+    private int[] heap;
+    private int lastIndex;
 
     public ArrayHeap() {
-
+        this(INITIAL_HEAP_SIZE);
     }
 
     public ArrayHeap(final int size) {
         this.heap = new int[size];
+        this.lastIndex = -1;
     }
 
     private ArrayHeap(final int[] heap) {
