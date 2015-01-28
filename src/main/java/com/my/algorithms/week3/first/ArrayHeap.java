@@ -67,6 +67,21 @@ public class ArrayHeap implements Heap<Integer> {
         }
         System.out.println("Extracted heap length: " + heapExtract.lastIndex);
         System.out.println("Extracted heap: " + Arrays.toString(heapExtract.getHeap()) + "\n");
+
+        final int[] valueChange = {1, 2, 3, 4, 5, 6, 7};
+        final ArrayHeap heapChange = new ArrayHeap(valueChange);
+        System.out.println("Initial heap: " + Arrays.toString(heapChange.getHeap()));
+        System.out.println("Changed to index: " + heapChange.change(4, 9));
+        System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()));
+        System.out.println("Changed to index: " + heapChange.change(4, 1));
+        System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()) + "\n");
+
+        final int[] valueRemove = {1, 2, 3, 4, 5, 6, 7, 8};
+        final ArrayHeap heapRemove = new ArrayHeap(valueRemove);
+        for (int index = 7; index >= 0; index--) {
+            heapRemove.remove(index);
+            System.out.println("Removed heap: " + Arrays.toString(heapRemove.getHeap()));
+        }
     }
 
     @Override
@@ -82,7 +97,8 @@ public class ArrayHeap implements Heap<Integer> {
 
     @Override
     public void remove(final int index) {
-        // TODO implement me
+        change(index, Integer.MIN_VALUE);
+        extract();
     }
 
     @Override
@@ -103,8 +119,18 @@ public class ArrayHeap implements Heap<Integer> {
     }
 
     @Override
-    public void change(final int index, final Integer value) {
-        // TODO implement me
+    public int change(final int index, final Integer value) {
+        final int result;
+        final int current = heap[index];
+        heap[index] = value;
+        if (current > value) {
+            result = siftUp(index);
+        } else if (current < value) {
+            result = siftDown(index);
+        } else {
+            result = index;
+        }
+        return result;
     }
 
     private int siftUp(final int index) {

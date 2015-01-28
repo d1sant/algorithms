@@ -37,8 +37,8 @@ public class ObjectHeap implements Heap<Integer> {
     }
 
     @Override
-    public void change(final int index, final Integer value) {
-        // TODO implement me
+    public int change(final int index, final Integer value) {
+        return -1; // TODO implement me
     }
 
     private void siftUp(final Node node) {

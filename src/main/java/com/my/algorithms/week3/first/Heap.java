@@ -9,6 +9,7 @@ public interface Heap<T> {
     /**
      * Inserts element to heap in correct place according to max/min priority (depends on specific implementation)
      * @param value value to be inserted
+     * @return index of element in the heap
      */
     int insert(final T value);
 
@@ -34,6 +35,7 @@ public interface Heap<T> {
      * Changes priority of element with specified index.
      * @param index index of element to be changed
      * @param value priority of element
+     * @return index of element in the heap
      */
-    void change(final int index, final T value);
+    int change(final int index, final T value);
 }
