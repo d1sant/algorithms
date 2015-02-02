@@ -82,7 +82,7 @@ public class TreeOfSegments {
      * @param vertexLeft left index of sub array that corresponds to vertexes
      * @param vertexRight right index of sub array that corresponds to vertexes
      * @param index index of cell. Indexes begin with 0
-     * @param value value that will be placed in cell with index index
+     * @param value value that will be placed
      */
     protected void set(final int vertex, final int vertexLeft, final int vertexRight, final int index, final int value) {
         if (index < vertexLeft || vertexRight < index) {
