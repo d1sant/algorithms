@@ -52,14 +52,14 @@ public class TreeOfSegments {
     }
 
     /**
-     * Gets minimum on defined segment
+     * Gets minimum on defined segment.
      *
      * @param v vertex
      * @param vl left border of segment that corresponds to vertex v
      * @param vr right border of segment that corresponds to vertex v
      * @param l left border
      * @param r right border
-     * @return minimum of defined segment
+     * @return minimum on defined segment
      */
     public int getMin(final int v, final int vl, final int vr, final int l, final int r) {
         if (r < vl || vr < l) {
