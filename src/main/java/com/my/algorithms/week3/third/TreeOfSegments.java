@@ -81,7 +81,7 @@ public class TreeOfSegments {
      * @param vertex vertex
      * @param vertexLeft left index of sub array that corresponds to vertexes
      * @param vertexRight right index of sub array that corresponds to vertexes
-     * @param index index of cell
+     * @param index index of cell. Indexes begin with 0
      * @param value value that will be placed in cell with index index
      */
     protected void set(final int vertex, final int vertexLeft, final int vertexRight, final int index, final int value) {
@@ -115,8 +115,8 @@ public class TreeOfSegments {
      * @param vertex vertex
      * @param vertexLeft left index of sub array that corresponds to vertexes
      * @param vertexRight right index of sub array that corresponds to vertexes
-     * @param left left index
-     * @param right right index
+     * @param left left index. Indexes begin with 0
+     * @param right right index.  Indexes begin with 0
      * @return minimum on defined segment
      */
     protected int getMin(final int vertex, final int vertexLeft, final int vertexRight, final int left, final int right) {
