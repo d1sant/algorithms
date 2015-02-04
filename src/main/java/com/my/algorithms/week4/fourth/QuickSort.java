@@ -27,6 +27,21 @@ public class QuickSort {
     }
 
     private static int partition(final int[] unsorted, final int left, final int right) {
-        return -1; // TODO implement me
+        int pivot = unsorted[left];
+        int i, j; i = j = left + 1;
+        while (i <= right) {
+            if (unsorted[i] <= pivot) {
+                j++;
+                swap(unsorted, i, j);
+            }
+        }
+        swap(unsorted, left, j);
+        return j;
+    }
+
+    private static void swap(final int[] array, final int fromIndex, final int toIndex) {
+        final Integer to = array[toIndex];
+        array[toIndex] = array[fromIndex];
+        array[fromIndex] = to;
     }
 }
