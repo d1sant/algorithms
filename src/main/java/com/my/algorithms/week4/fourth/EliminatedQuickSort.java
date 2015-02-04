@@ -4,9 +4,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Quick sort algorithm with random pivot element selection.
+ * Eliminated quick sort algorithm with random pivot element.
+ * It has constant depth of recurrent invocations equaled to log(n)
  */
-public class RandomQuickSort extends AbstractQuickSort {
+public class EliminatedQuickSort extends AbstractQuickSort {
 
     private final Random random = new Random();
 
@@ -20,6 +21,20 @@ public class RandomQuickSort extends AbstractQuickSort {
 
     public static void sort(final int[] unsortedValues) {
         new QuickSort().quickSort(unsortedValues, 0, unsortedValues.length - 1);
+    }
+
+    @Override
+    protected void quickSort(int[] unsorted, int left, int right) {
+        while (left < right) {
+            final int pivotIndex = partition(unsorted, left, right);
+            if ((pivotIndex - left) >= (right - pivotIndex)) {
+                quickSort(unsorted, left, pivotIndex - 1);
+                left = pivotIndex + 1;
+            } else {
+                quickSort(unsorted, pivotIndex + 1, right);
+                right = pivotIndex - 1;
+            }
+        }
     }
 
     @Override
