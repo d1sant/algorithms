@@ -53,6 +53,5 @@ public class QuickSort {
         final Integer to = array[toIndex];
         array[toIndex] = array[fromIndex];
         array[fromIndex] = to;
-
     }
 }
