@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public class RandomQuickSort extends AbstractQuickSort {
 
+    final Random random = new Random();
+
     public static void main(final String[] args) {
 
         final int[] unsorted = {3, 6, 2, 1, 8, 7, 3, 5};
@@ -22,7 +24,6 @@ public class RandomQuickSort extends AbstractQuickSort {
 
     @Override
     protected void definePivot(int[] unsorted, int left, int right) {
-        final Random random = new Random();
         final int pivotIndex = random.nextInt((right - left) + 1) + left;
         swap(unsorted, pivotIndex, 0);
     }
