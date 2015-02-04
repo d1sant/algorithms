@@ -1,18 +1,14 @@
 package com.my.algorithms.week4.fourth;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
- * Quick sort algorithm implementation.
+ * Quick sort algorithm with random pivot element selection.
  */
-public class QuickSort extends AbstractQuickSort {
+public class RandomQuickSort extends AbstractQuickSort {
 
     public static void main(final String[] args) {
-
-        final int[] unsortedForPivot = {6, 4, 3, 9, 2, 7, 11, 1};
-        System.out.println("Initial values: " + Arrays.toString(unsortedForPivot));
-        System.out.println("Pivot index: " + new QuickSort().partition(unsortedForPivot, 0, unsortedForPivot.length - 1));
-        System.out.println("Partitioned values: " + Arrays.toString(unsortedForPivot) + "\n");
 
         final int[] unsorted = {3, 6, 2, 1, 8, 7, 3, 5};
         System.out.println("Initial values: " + Arrays.toString(unsorted));
@@ -26,6 +22,8 @@ public class QuickSort extends AbstractQuickSort {
 
     @Override
     protected void definePivot(int[] unsorted, int left, int right) {
-        // this is simple implementation without sophisticated selection of pivot element
+        final Random random = new Random();
+        final int pivotIndex = random.nextInt((right - left) + 1) + left;
+        swap(unsorted, pivotIndex, 0);
     }
 }
