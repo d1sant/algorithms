@@ -15,7 +15,12 @@ public class StableCountingSort {
 
         final Integer[] sorted = sort(unsorted, 3);
         System.out.println("Sorted: " + Arrays.toString(sorted));
-        System.out.println("Sorted raw: " + arrayToRawString(sorted));
+        System.out.println("Sorted raw: " + arrayToRawString(sorted) + "\n");
+
+        final Integer[] bigUnsorted = new Integer[] {1, 3, 2, 6, 9, 4, 1, 11, 5, 7, 5};
+        System.out.println("Unsorted: " + Arrays.toString(bigUnsorted));
+        final Integer[] bigSorted = sort(bigUnsorted, 11);
+        System.out.println("Sorted: " + Arrays.toString(bigSorted));
     }
 
     public static Integer[] sort(Integer[] unsorted, final int maxValue) {
