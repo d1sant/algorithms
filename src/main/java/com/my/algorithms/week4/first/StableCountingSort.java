@@ -23,7 +23,7 @@ public class StableCountingSort {
         System.out.println("Sorted: " + Arrays.toString(bigSorted));
     }
 
-    public static Integer[] sort(Integer[] unsorted, final int maxValue) {
+    public static Integer[] sort(final Integer[] unsorted, final int maxValue) {
         final int[] counters = new int[maxValue];
         for (int i = 0; i < maxValue; i++) {
             counters[i] = 0;
