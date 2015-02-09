@@ -1,6 +1,6 @@
 package com.my.algorithms.week4.first;
 
-import java.util.Arrays;
+import com.my.algorithms.tools.Arrays;
 
 /**
  * Inserting sort algorithm implementation.
@@ -13,7 +13,13 @@ public class InsertingSort {
         System.out.println(Arrays.toString(unsorted));
     }
 
-    public static void sort(final int[] unsortedValues) {
-        // TODO implement me
+    public static void sort(final int[] unsorted) {
+        for (int firstIndex = 1; firstIndex < unsorted.length; firstIndex++) {
+            int secondIndex = firstIndex;
+            while (secondIndex > 0 && unsorted[secondIndex] < unsorted[secondIndex - 1]) {
+                Arrays.swap(unsorted, secondIndex, secondIndex - 1);
+                secondIndex--;
+            }
+        }
     }
 }

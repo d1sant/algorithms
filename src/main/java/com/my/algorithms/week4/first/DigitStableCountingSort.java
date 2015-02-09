@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Digit sorting (aka Radix sorting) algorithm witch uses stable counting sorting.
  *
- * TODO need to be fixed on set of digits like 100, 1, 10, 11, 1000
+ * TODO need to be fixed on set of digits like "100, 1, 10, 11, 1000"
  */
 public class DigitStableCountingSort {
 
