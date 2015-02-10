@@ -3,6 +3,8 @@ package com.my.algorithms.week4.fourth;
 import java.util.Arrays;
 import java.util.Random;
 
+import static com.my.algorithms.tools.Arrays.swap;
+
 /**
  * Eliminated quick sort algorithm with random pivot element.
  * It has constant depth of recurrent invocations equaled to log(n)
