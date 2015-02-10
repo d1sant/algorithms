@@ -1,5 +1,7 @@
 package com.my.algorithms.week4.fourth;
 
+import static com.my.algorithms.tools.Arrays.swap;
+
 /**
  * Abstract implementation of quick sort algorithm.
  */
@@ -34,11 +36,5 @@ abstract class AbstractQuickSort {
         }
         swap(unsorted, left, j);
         return j;
-    }
-
-    protected static void swap(final int[] array, final int fromIndex, final int toIndex) {
-        final Integer to = array[toIndex];
-        array[toIndex] = array[fromIndex];
-        array[fromIndex] = to;
     }
 }

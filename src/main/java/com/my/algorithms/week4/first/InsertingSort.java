@@ -1,6 +1,7 @@
 package com.my.algorithms.week4.first;
 
-import com.my.algorithms.tools.Arrays;
+import java.util.Arrays;
+import static com.my.algorithms.tools.Arrays.swap;
 
 /**
  * Inserting sort algorithm implementation.
@@ -17,7 +18,7 @@ public class InsertingSort {
         for (int firstIndex = 1; firstIndex < unsorted.length; firstIndex++) {
             int secondIndex = firstIndex;
             while (secondIndex > 0 && unsorted[secondIndex] < unsorted[secondIndex - 1]) {
-                Arrays.swap(unsorted, secondIndex, secondIndex - 1);
+                swap(unsorted, secondIndex, secondIndex - 1);
                 secondIndex--;
             }
         }
