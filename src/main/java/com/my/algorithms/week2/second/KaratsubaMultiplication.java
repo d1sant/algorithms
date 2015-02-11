@@ -1,6 +1,8 @@
 package com.my.algorithms.week2.second;
 
 import java.math.BigInteger;
+import static com.my.algorithms.tools.Math.roundUp;
+import static com.my.algorithms.tools.Math.roundDown;
 
 /**
  * Karatsuba multiplication algorithm
@@ -105,20 +107,5 @@ public class KaratsubaMultiplication {
             result += ((long) bytes[i] & 0xffL) << (8 * i);
         }
         return result;
-    }
-
-    private static int roundUp(final int num, final int divisor) {
-        return (num + divisor - 1) / divisor;
-    }
-
-    /**
-     * Useless implementation cause java does it by default
-     * @param num values to divide
-     * @param divisor divisor value
-     * @return rounded by down value after division
-     */
-    @Deprecated
-    private static int roundDown(final int num, final int divisor) {
-        return (num + divisor - 2) / divisor;
     }
 }
