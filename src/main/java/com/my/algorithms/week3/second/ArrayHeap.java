@@ -2,7 +2,7 @@ package com.my.algorithms.week3.second;
 
 import java.util.Arrays;
 
-import static com.my.algorithms.tools.Heaps.siftDown;
+import static com.my.algorithms.tools.Heaps.siftDownMax;
 import static com.my.algorithms.tools.Heaps.siftUp;
 
 /**
@@ -60,7 +60,7 @@ public class ArrayHeap implements Heap<Integer> {
 
         final int[] valuesSiftDown = {12, 2, 3, 5, 8, 10};
         System.out.println("Initial heap: " + Arrays.toString(valuesSiftDown));
-        System.out.println("Sifted down to index: " + siftDown(valuesSiftDown, 0, valuesSiftDown.length - 1));
+        System.out.println("Sifted down to index: " + siftDownMax(valuesSiftDown, 0, valuesSiftDown.length - 1));
         System.out.println("Sifted down heap: " + Arrays.toString(valuesSiftDown) + "\n");
 
         final int[] valuesExtract = {1, 2, 3, 4, 5, 6, 7};
@@ -117,7 +117,7 @@ public class ArrayHeap implements Heap<Integer> {
         heap[lastIndex] = 0; // TODO Change it to null after modifying base storage
         lastIndex--;
         if (heap[0] > heap[1] || heap[0] > heap[2]) {
-            siftDown(heap, 0, lastIndex);
+            siftDownMax(heap, 0, lastIndex);
         }
         return result;
     }
@@ -130,7 +130,7 @@ public class ArrayHeap implements Heap<Integer> {
         if (current > value) {
             result = siftUp(heap, index);
         } else if (current < value) {
-            result = siftDown(heap, index, lastIndex);
+            result = siftDownMax(heap, index, lastIndex);
         } else {
             result = index;
         }
