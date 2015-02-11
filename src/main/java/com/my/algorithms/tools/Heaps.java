@@ -2,7 +2,26 @@ package com.my.algorithms.tools;
 
 import static com.my.algorithms.tools.Arrays.swap;
 
+/**
+ * Auxiliary API for working with Heaps.
+ */
 public class Heaps {
+
+    /**
+     * Sifts up the element in the max heap.
+     *
+     * @param heap array of elements that presents a heap
+     * @param index index of element to sift up
+     * @return index of sifted up element
+     */
+    public static int siftUpMax(final int[] heap, final int index) {
+        return siftUp(heap, index, new Comparable() {
+            @Override
+            public boolean compare(int first, int second) {
+                return first < second;
+            }
+        });
+    }
 
     /**
      * Sifts up the element in the min heap.
@@ -11,10 +30,28 @@ public class Heaps {
      * @param index index of element to sift up
      * @return index of sifted up element
      */
-    public static int siftUp(final int[] heap, final int index) {
+    public static int siftUpMin(final int[] heap, final int index) {
+        return siftUp(heap, index, new Comparable() {
+            @Override
+            public boolean compare(int first, int second) {
+                return first > second;
+            }
+        });
+    }
+
+
+    /**
+     * Sifts up the element in the heap. Must be provided compare operator in order to build max or min heap.
+     *
+     * @param heap array of elements that presents a heap
+     * @param index index of element to sift up
+     * @param operator compare operator for building different heaps (ex. max, min)
+     * @return index of sifted up element
+     */
+    private static int siftUp(final int[] heap, final int index, final Comparable operator) {
         int parentIndex = (index - 1) / 2;
         int childIndex = index;
-        while (parentIndex >= 0 && heap[parentIndex] > heap[childIndex]) {
+        while (parentIndex >= 0 && operator.compare(heap[parentIndex], heap[childIndex])) {
             swap(heap, parentIndex, childIndex);
             childIndex = parentIndex;
             parentIndex = (parentIndex - 1) / 2;

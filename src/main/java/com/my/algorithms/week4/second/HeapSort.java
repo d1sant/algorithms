@@ -26,10 +26,10 @@ public class HeapSort {
     public static void sort(final int[] unsorted) {
         buildMaxHeap(unsorted);
         int size = unsorted.length;
-        for (int i = (unsorted.length - 1); i <= 1; i--) {
+        for (int i = (unsorted.length - 1); i >= 1; i--) {
             swap(unsorted, i, 0);
             size--;
-            siftDownMin(unsorted, 0, size);
+            siftDownMin(unsorted, 0, size - 1);
         }
     }
 

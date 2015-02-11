@@ -3,7 +3,7 @@ package com.my.algorithms.week3.second;
 import java.util.Arrays;
 
 import static com.my.algorithms.tools.Heaps.siftDownMax;
-import static com.my.algorithms.tools.Heaps.siftUp;
+import static com.my.algorithms.tools.Heaps.siftUpMin;
 
 /**
  * Heap algorithm implementation based on array storage.
@@ -44,7 +44,7 @@ public class ArrayHeap implements Heap<Integer> {
         final int[] valuesSiftUp = {1, 2, 3, 5, 8, 2};
         final ArrayHeap heapSiftUp = new ArrayHeap(valuesSiftUp);
         System.out.println("Initial heap: " + Arrays.toString(valuesSiftUp));
-        System.out.println("Sifted up to index: " + siftUp(valuesSiftUp, 5));
+        System.out.println("Sifted up to index: " + siftUpMin(valuesSiftUp, 5));
         System.out.println("Sifted up heap: " + Arrays.toString(valuesSiftUp) + "\n");
 
         System.out.println("Initial heap: " + Arrays.toString(heapSiftUp.getHeap()));
@@ -96,7 +96,7 @@ public class ArrayHeap implements Heap<Integer> {
         }
         heap[newLastIndex] = value;
         lastIndex = newLastIndex;
-        return (heap[(newLastIndex - 1) / 2] > value) ? siftUp(heap, newLastIndex) : newLastIndex;
+        return (heap[(newLastIndex - 1) / 2] > value) ? siftUpMin(heap, newLastIndex) : newLastIndex;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class ArrayHeap implements Heap<Integer> {
         final int current = heap[index];
         heap[index] = value;
         if (current > value) {
-            result = siftUp(heap, index);
+            result = siftUpMin(heap, index);
         } else if (current < value) {
             result = siftDownMax(heap, index, lastIndex);
         } else {
