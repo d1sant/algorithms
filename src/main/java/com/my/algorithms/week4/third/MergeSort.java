@@ -41,9 +41,9 @@ public class MergeSort {
         final int middle = (left + right) / 2;
         mergeSort(unsorted, left, middle);
         mergeSort(unsorted, middle + 1, right);
-        final int[] leftArray = Arrays.copyOfRange(unsorted, left, middle);
-        final int[] rightArray = Arrays.copyOfRange(unsorted, middle + 1, right);
-        System.out.println("For merge: " + Arrays.toString(leftArray) + " : " + Arrays.toString(rightArray));
+        final int[] leftArray = (middle - left) > 1 ? Arrays.copyOfRange(unsorted, left, middle) : new int[] {unsorted[left]};
+        final int[] rightArray = (right - middle) > 1 ? Arrays.copyOfRange(unsorted, middle + 1, right) : new int[] {unsorted[right]};
+        System.out.println("For merge (" + left +  ":" + middle + ":" + right + "): " + Arrays.toString(leftArray) + " : " + Arrays.toString(rightArray));
         merge(leftArray, rightArray, unsorted, left);
     }
 
