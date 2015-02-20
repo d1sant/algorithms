@@ -1,5 +1,8 @@
 package com.my.algorithms.tools;
 
+/**
+ * Auxiliary API for math operations.
+ */
 public class Math {
 
     /**
