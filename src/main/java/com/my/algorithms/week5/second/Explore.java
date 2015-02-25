@@ -22,10 +22,12 @@ public class Explore {
 
     public static void explore(final int[][] graph, final int vertex, final int[] visited) {
         visited[vertex] = 1;
-        for (int edgeIndex = 0; edgeIndex < graph[vertex].length; edgeIndex++) {
-            final int edge = graph[vertex][edgeIndex];
-            if (visited[edge] == 0) {
-                explore(graph, edge, visited);
+        if (graph[vertex] != null) {
+            for (int edgeIndex = 0; edgeIndex < graph[vertex].length; edgeIndex++) {
+                final int edge = graph[vertex][edgeIndex];
+                if (visited[edge] == 0) {
+                    explore(graph, edge, visited);
+                }
             }
         }
     }
