@@ -1,6 +1,6 @@
 package com.my.algorithms.week5.second;
 
-import java.util.Arrays;
+import com.my.algorithms.tools.Graphs;
 
 import static com.my.algorithms.week5.second.Explore.explore;
 
@@ -11,7 +11,7 @@ public class ExploreTask1 {
         add(graph, 1, 2);
         add(graph, 3, 2);
         add(graph, 4, 3);
-        System.out.println(toString(graph));
+        System.out.println(Graphs.toString(graph));
         search(graph, 1, 4);
     }
 
@@ -43,14 +43,6 @@ public class ExploreTask1 {
         } else {
             graph[vertex] = new int[]{vertexForAdd};
         }
-    }
-
-    public static String toString(final int[][] graph) {
-        final StringBuilder result = new StringBuilder();
-        for (int[] edges : graph) {
-            result.append("[").append(Arrays.toString(edges)).append("]");
-        }
-        return result.toString();
     }
 
     public static void search(final int[][] graph, final int from, final int to) {
