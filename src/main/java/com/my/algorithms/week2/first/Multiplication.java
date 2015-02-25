@@ -1,6 +1,7 @@
 package com.my.algorithms.week2.first;
 
 import java.util.Random;
+import static com.my.algorithms.tools.Randoms.randInt;
 
 /**
  * Multiplication algorithm with division by two
@@ -49,10 +50,6 @@ public class Multiplication {
                 System.out.println(x + " * " + y + " = " + result);
             }
         }
-    }
-
-    private static int randInt(final int max, final int min) {
-        return random.nextInt(max - min) + min;
     }
 
     public static long multiply(final int x, final int y) {
