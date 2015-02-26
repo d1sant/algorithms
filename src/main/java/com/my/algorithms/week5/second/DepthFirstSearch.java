@@ -9,18 +9,18 @@ import static com.my.algorithms.week5.second.Explore.explore;
  */
 public class DepthFirstSearch {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final int[][] graph = new int[][]{{1, 2}, {2}, {}};
-        System.out.println("Visited vertexes: " + Arrays.toString(dsg(graph)));
+        System.out.println("Visited vertexes: " + Arrays.toString(dfs(graph)));
     }
 
-    public static int[] dsg(final int[][] graph) {
+    public static int[] dfs(final int[][] graph) {
         final int[] visited = new int[graph.length];
-        dsg(graph, visited);
+        dfs(graph, visited);
         return visited;
     }
 
-    public static void dsg(final int[][] graph, final int[] visited) {
+    public static void dfs(final int[][] graph, final int[] visited) {
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (visited[vertexIndex] == 0) {
                 explore(graph, vertexIndex, visited);

@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class Explore {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final int[][] graph = new int[][]{{1, 2}, {2}, {}};
         System.out.println("Visited from 0 vertex: " + Arrays.toString(explore(graph, 0)));
         System.out.println("Visited from 1 vertex: " + Arrays.toString(explore(graph, 1)));
