@@ -15,4 +15,8 @@ public class Counter {
     public int incrementAndGet() {
         return ++value;
     }
+
+    public int getAndIncrement() {
+        return value++;
+    }
 }
