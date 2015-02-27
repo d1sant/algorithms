@@ -15,7 +15,7 @@ public class DepthFirstSearchTask2 {
         for (int index = 0; index < edges; index++) {
             add(graph, scanner.nextInt(), scanner.nextInt());
         }
-        System.out.println(new HashSet<Integer>(Arrays.asList(dsg(graph))).size());
+        System.out.println(new HashSet<Integer>(Arrays.asList(dfs(graph))).size());
     }
 
     private static void add(final int[][] graph, final int firstVertex, final int secondVertex) {
@@ -48,13 +48,13 @@ public class DepthFirstSearchTask2 {
         }
     }
 
-    private static Integer[] dsg(final int[][] graph) {
+    private static Integer[] dfs(final int[][] graph) {
         final Integer[] visited = new Integer[graph.length];
-        dsg(graph, visited);
+        dfs(graph, visited);
         return visited;
     }
 
-    private static void dsg(final int[][] graph, final Integer[] visited) {
+    private static void dfs(final int[][] graph, final Integer[] visited) {
         int cComponent = 1;
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (visited[vertexIndex] == null) {

@@ -2,10 +2,9 @@ package com.my.algorithms.week5.third;
 
 import java.util.Scanner;
 
-public class CycleSearchTask1 {
+public class TopologicalSortTask2 {
 
     public static void main(String[] args) {
-
         final Scanner scanner = new Scanner(System.in);
         final int vertexes = scanner.nextInt();
         final int edges = scanner.nextInt();
@@ -14,7 +13,7 @@ public class CycleSearchTask1 {
         for (int index = 0; index < edges; index++) {
             addDirected(graph, scanner.nextInt(), scanner.nextInt());
         }
-        dfs(graph);
+        System.out.println(getSortedAsString(topSort(graph)));
     }
 
     private static void addDirected(final int[][] graph, final int firstVertex, final int secondVertex) {
@@ -38,49 +37,46 @@ public class CycleSearchTask1 {
         }
     }
 
-    private static WorkingTime[] dfs(final int[][] graph) {
-        final WorkingTime[] visited = new WorkingTime[graph.length];
-        final Time cycle = new Time(0);
-        dfs(graph, visited, cycle);
-        System.out.println(cycle.value > 0 ? 1 : 0);
-        return visited;
+    private static int[] topSort(int[][] graph) {
+        final int[] sorted = new int[graph.length];
+        dfs(graph, sorted);
+        return sorted;
     }
 
-    private static void dfs(final int[][] graph, final WorkingTime[] times, Time cycle) {
-        final Time time = new Time(0);
+    private static void dfs(final int[][] graph, final int[] sorted) {
+        dfs(graph, new WorkingTime[graph.length], sorted);
+    }
+
+    private static void dfs(final int[][] graph, final WorkingTime[] times, final int[] sorted) {
+        final Counter time = new Counter(0);
+        final Counter sortedIndex = new Counter(graph.length);
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (times[vertexIndex] == null) {
-                explore(graph, vertexIndex, times, time, cycle);
+                explore(graph, vertexIndex, times, time, sorted, sortedIndex);
             }
         }
     }
 
-    private static void explore(final int[][] graph, final int vertex, final WorkingTime[] times, final Time time, final Time cycle) {
+    private static void explore(final int[][] graph, final int vertex, final WorkingTime[] times, final Counter time, final int[] sorted, final Counter sortedIndex) {
         times[vertex] = new WorkingTime(time.incrementAndGet());
         if (graph[vertex] != null) {
             for (int edgeIndex = 0; edgeIndex < graph[vertex].length; edgeIndex++) {
                 final int edge = graph[vertex][edgeIndex];
                 if (times[edge] == null) {
-                    explore(graph, edge, times, time, cycle);
-                } else if (times[edge].end == 0) {
-                    cycle.incrementAndGet();
+                    explore(graph, edge, times, time, sorted, sortedIndex);
                 }
             }
         }
         times[vertex].setEnd(time.incrementAndGet());
+        sorted[sortedIndex.decrementAndGet()] = vertex;
     }
 
-    private static class Time {
-
-        private int value;
-
-        public Time(int value) {
-            this.value = value;
+    private static String getSortedAsString(final int[] sorted) {
+        final StringBuilder result = new StringBuilder();
+        for (final int vertex : sorted) {
+            result.append(vertex + 1).append(' ');
         }
-
-        public int incrementAndGet() {
-            return ++value;
-        }
+        return result.toString();
     }
 
     private static class WorkingTime {
@@ -99,6 +95,24 @@ public class CycleSearchTask1 {
         @Override
         public String toString() {
             return "{" + start + ", " + end + '}';
+        }
+    }
+
+    private static class Counter {
+
+        private int value;
+
+        public Counter(int value) {
+            this.value = value;
+        }
+
+
+        public int incrementAndGet() {
+            return ++value;
+        }
+
+        public int decrementAndGet() {
+            return --value;
         }
     }
 }

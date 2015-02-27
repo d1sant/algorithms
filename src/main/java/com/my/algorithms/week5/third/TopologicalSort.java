@@ -26,12 +26,11 @@ public class TopologicalSort {
         addDirected(graph, 2, 4);
 
         System.out.println("Graph: " + Graphs.toString(graph));
-        final int[] sorted = new int[6];
-        topSort(graph, sorted);
-        System.out.println("Topologically sorted vertexes: " + Arrays.toString(sorted));
+        System.out.println("Topologically sorted vertexes: " + Arrays.toString(topSort(graph)));
     }
 
-    private static void topSort(int[][] graph, int[] sorted) {
+    private static int[] topSort(int[][] graph) {
+        final int[] sorted = new int[graph.length];
         final int[] degrees = new int[graph.length];
         for (int[] edges : graph) {
             if (edges != null) {
@@ -49,6 +48,7 @@ public class TopologicalSort {
         }
         processQueue(graph, degrees, queue, sorted);
         System.out.println("Degrees after queuing: " + Arrays.toString(degrees));
+        return sorted;
     }
 
     private static void processQueue(final int[][] graph, final int[] degrees, final Deque<Integer> queue, final int[] sorted) {

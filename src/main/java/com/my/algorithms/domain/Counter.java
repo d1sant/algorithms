@@ -16,7 +16,15 @@ public class Counter {
         return ++value;
     }
 
+    public int decrementAndGet() {
+        return --value;
+    }
+
     public int getAndIncrement() {
         return value++;
+    }
+
+    public int getAndDecrement() {
+        return value--;
     }
 }

@@ -1,6 +1,7 @@
 package com.my.algorithms.week5.third;
 
 import com.my.algorithms.domain.Counter;
+import com.my.algorithms.domain.WorkingTime;
 import com.my.algorithms.tools.Graphs;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class CycleSearch {
         addDirected(graph, 2, 3);
         addDirected(graph, 3, 1);
         System.out.println("Graph: " + Graphs.toString(graph));
-        System.out.println("Working times: " + Arrays.toString(dsg(graph)) + "\n");
+        System.out.println("Working times: " + Arrays.toString(dfs(graph)) + "\n");
 
         final int[][] graph2 = new int[7][];
         addDirected(graph2, 1, 2);
@@ -33,18 +34,18 @@ public class CycleSearch {
         addDirected(graph2, 6, 7);
         addDirected(graph2, 5, 7);
         System.out.println("Graph: " + Graphs.toString(graph2));
-        System.out.println("Working times: " + Arrays.toString(dsg(graph2)));
+        System.out.println("Working times: " + Arrays.toString(dfs(graph2)));
     }
 
-    private static WorkingTime[] dsg(final int[][] graph) {
+    private static WorkingTime[] dfs(final int[][] graph) {
         final WorkingTime[] visited = new WorkingTime[graph.length];
         final Counter cycle = new Counter(0);
-        dsg(graph, visited, cycle);
+        dfs(graph, visited, cycle);
         System.out.println("Number of cycles: " + cycle.get());
         return visited;
     }
 
-    private static void dsg(final int[][] graph, final WorkingTime[] times, Counter cycle) {
+    private static void dfs(final int[][] graph, final WorkingTime[] times, Counter cycle) {
         final Counter time = new Counter(0);
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (times[vertexIndex] == null) {
@@ -60,31 +61,12 @@ public class CycleSearch {
                 final int edge = graph[vertex][edgeIndex];
                 if (times[edge] == null) {
                     explore(graph, edge, times, time, cycle);
-                } else if (times[edge].end == 0) {
+                } else if (times[edge].getEnd() == 0) {
                     System.out.println("fromVertex: " + vertex + ", toVertex: " + edge);
                     cycle.incrementAndGet();
                 }
             }
         }
         times[vertex].setEnd(time.incrementAndGet());
-    }
-
-    private static class WorkingTime {
-
-        private int start;
-        private int end;
-
-        public WorkingTime(int start) {
-            this.start = start;
-        }
-
-        public void setEnd(int end) {
-            this.end = end;
-        }
-
-        @Override
-        public String toString() {
-            return "{" + start + ", " + end + '}';
-        }
     }
 }
