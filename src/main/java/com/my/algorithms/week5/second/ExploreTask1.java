@@ -12,38 +12,30 @@ public class ExploreTask1 {
         final int[][] graph = new int[vertexes][];
         scanner.nextLine();
         for (int index = 0; index < edges; index++) {
-            add(graph, scanner.nextInt(), scanner.nextInt());
+            addUndirected(graph, scanner.nextInt(), scanner.nextInt());
         }
         search(graph, scanner.nextInt(), scanner.nextInt());
     }
 
-    private static void add(final int[][] graph, final int firstVertex, final int secondVertex) {
+    private static void addUndirected(final int[][] graph, final int firstVertex, final int secondVertex) {
         addEdge(graph, firstVertex - 1, secondVertex - 1);
+        addEdge(graph, secondVertex - 1, firstVertex - 1);
     }
 
-    private static void addEdge(final int[][] graph, final int firstVertex, final int secondVertex) {
-        final int vertex;
-        final int vertexForAdd;
-        if (firstVertex < secondVertex) {
-            vertex = firstVertex;
-            vertexForAdd = secondVertex;
-        } else {
-            vertex = secondVertex;
-            vertexForAdd = firstVertex;
-        }
-        if (graph[vertex] != null) {
-            int length = graph[vertex].length;
+    private static void addEdge(final int[][] graph, final int vertexFrom, final int vertexTo) {
+        if (graph[vertexFrom] != null) {
+            int length = graph[vertexFrom].length;
             for (int edgeIndex = 0; edgeIndex < length; edgeIndex++) {
-               if (graph[vertex][edgeIndex] == vertexForAdd) {
+               if (graph[vertexFrom][edgeIndex] == vertexTo) {
                    return;
                }
             }
             final int[] edges = new int[length + 1];
-            System.arraycopy(graph[vertex], 0, edges, 0, length);
-            edges[length] = vertexForAdd;
-            graph[vertex] = edges;
+            System.arraycopy(graph[vertexFrom], 0, edges, 0, length);
+            edges[length] = vertexTo;
+            graph[vertexFrom] = edges;
         } else {
-            graph[vertex] = new int[]{vertexForAdd};
+            graph[vertexFrom] = new int[]{vertexTo};
         }
     }
 

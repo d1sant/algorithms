@@ -34,20 +34,20 @@ public class Graphs {
         addEdge(graph, firstVertex - 1, secondVertex - 1);
     }
 
-    protected static void addEdge(final int[][] graph, final int vertex, final int vertexForAdd) {
-        if (graph[vertex] != null) {
-            int length = graph[vertex].length;
+    protected static void addEdge(final int[][] graph, final int vertexFrom, final int vertexTo) {
+        if (graph[vertexFrom] != null) {
+            int length = graph[vertexFrom].length;
             for (int edgeIndex = 0; edgeIndex < length; edgeIndex++) {
-                if (graph[vertex][edgeIndex] == vertexForAdd) {
+                if (graph[vertexFrom][edgeIndex] == vertexTo) {
                     return;
                 }
             }
             final int[] edges = new int[length + 1];
-            System.arraycopy(graph[vertex], 0, edges, 0, length);
-            edges[length] = vertexForAdd;
-            graph[vertex] = edges;
+            System.arraycopy(graph[vertexFrom], 0, edges, 0, length);
+            edges[length] = vertexTo;
+            graph[vertexFrom] = edges;
         } else {
-            graph[vertex] = new int[]{vertexForAdd};
+            graph[vertexFrom] = new int[]{vertexTo};
         }
     }
 }
