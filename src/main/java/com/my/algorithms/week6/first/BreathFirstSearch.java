@@ -39,7 +39,7 @@ public class BreathFirstSearch {
             if (graph[vertex] != null) {
                 for (final int vertexTo : graph[vertex]) {
                     if (distances[vertexTo] == Integer.MAX_VALUE) {
-                        queue.push(vertexTo);
+                        queue.add(vertexTo);
                         distances[vertexTo] = distances[vertex] + 1;
                     }
                 }
