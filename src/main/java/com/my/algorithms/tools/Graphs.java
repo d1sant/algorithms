@@ -14,7 +14,7 @@ public class Graphs {
     }
 
     /**
-     * Adds directed edge to graph.
+     * Adds undirected edge to graph.
      * @param graph graph
      * @param firstVertex index of first vertex. Starts with 1
      * @param secondVertex index of second vertex. Starts with 1
@@ -25,13 +25,34 @@ public class Graphs {
     }
 
     /**
-     * Adds undirected edge to graph
+     * Adds undirected normalized edge to graph.
+     * @param graph graph
+     * @param firstVertex index of first vertex. Starts with 0
+     * @param secondVertex index of second vertex. Starts with 0
+     */
+    public static void addUndirectedNormalized(final int[][] graph, final int firstVertex, final int secondVertex) {
+        addEdge(graph, firstVertex, secondVertex);
+        addEdge(graph, secondVertex, firstVertex);
+    }
+
+    /**
+     * Adds directed edge to graph
      * @param graph array presented graph
      * @param firstVertex index of first vertex. Starts with 1
      * @param secondVertex index of second vertex. Starts with 1
      */
     public static void addDirected(final int[][] graph, final int firstVertex, final int secondVertex) {
         addEdge(graph, firstVertex - 1, secondVertex - 1);
+    }
+
+    /**
+     * Adds directed normalized edge to graph
+     * @param graph array presented graph
+     * @param firstVertex index of first vertex. Starts with 0
+     * @param secondVertex index of second vertex. Starts with 0
+     */
+    public static void addDirectedNormalized(final int[][] graph, final int firstVertex, final int secondVertex) {
+        addEdge(graph, firstVertex, secondVertex);
     }
 
     protected static void addEdge(final int[][] graph, final int vertexFrom, final int vertexTo) {
@@ -49,5 +70,22 @@ public class Graphs {
         } else {
             graph[vertexFrom] = new int[]{vertexTo};
         }
+    }
+
+    /**
+     * Returns reverted graph.
+     * @param graph array presented graph
+     * @return reverted graph
+     */
+    public static int[][] reverse(final int[][] graph) {
+        final int[][] reversed = new int[graph.length][];
+        for (int vertexFrom = 0; vertexFrom < graph.length; vertexFrom++) {
+            if (graph[vertexFrom] != null) {
+                for (final int vertexTo : graph[vertexFrom]) {
+                    addDirectedNormalized(reversed, vertexTo, vertexFrom);
+                }
+            }
+        }
+        return reversed;
     }
 }
