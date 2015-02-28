@@ -49,13 +49,13 @@ public class BreathFirstSearchTask1 {
         Arrays.fill(distances, Integer.MAX_VALUE);
         distances[vertexFrom] = 0;
         final Deque<Integer> queue = new LinkedList<Integer>();
-        queue.push(vertexFrom);
+        queue.offer(vertexFrom);
         while (queue.size() > 0) {
             final int vertex = queue.poll();
             if (graph[vertex] != null) {
                 for (final int vertexTo : graph[vertex]) {
                     if (distances[vertexTo] == Integer.MAX_VALUE) {
-                        queue.add(vertexTo);
+                        queue.offer(vertexTo);
                         distances[vertexTo] = distances[vertex] + 1;
                     }
                 }

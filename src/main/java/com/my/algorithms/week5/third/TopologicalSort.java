@@ -61,7 +61,7 @@ public class TopologicalSort {
                 for (int vertexTo : edges) {
                     if (degrees[vertexTo] - 1 == 0) {
                         degrees[vertexTo] = 0;
-                        queue.push(vertexTo);
+                        queue.offer(vertexTo);
                     } else if (degrees[vertexTo] > 1) {
                         degrees[vertexTo]--;
                     }
