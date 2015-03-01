@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CycleSearchTask1 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final Scanner scanner = new Scanner(System.in);
         final int vertexes = scanner.nextInt();

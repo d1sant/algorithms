@@ -13,7 +13,7 @@ import static com.my.algorithms.tools.Graphs.addDirected;
  */
 public class CycleSearch {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final int[][] graph = new int[4][];
         addDirected(graph, 1, 2);

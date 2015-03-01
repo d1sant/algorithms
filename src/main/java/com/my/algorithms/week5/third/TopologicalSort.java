@@ -13,7 +13,7 @@ import static com.my.algorithms.tools.Graphs.addDirected;
  */
 public class TopologicalSort {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final int[][] graph = new int[6][];
         addDirected(graph, 1, 3);
@@ -29,7 +29,7 @@ public class TopologicalSort {
         System.out.println("Topologically sorted vertexes: " + Arrays.toString(topSort(graph)));
     }
 
-    private static int[] topSort(int[][] graph) {
+    private static int[] topSort(final int[][] graph) {
         final int[] sorted = new int[graph.length];
         final int[] degrees = new int[graph.length];
         for (int[] edges : graph) {

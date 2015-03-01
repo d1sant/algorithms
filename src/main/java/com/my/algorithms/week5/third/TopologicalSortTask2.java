@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TopologicalSortTask2 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final Scanner scanner = new Scanner(System.in);
         final int vertexes = scanner.nextInt();
         final int edges = scanner.nextInt();
@@ -37,7 +37,7 @@ public class TopologicalSortTask2 {
         }
     }
 
-    private static int[] topSort(int[][] graph) {
+    private static int[] topSort(final int[][] graph) {
         final int[] sorted = new int[graph.length];
         dfs(graph, sorted);
         return sorted;
@@ -105,7 +105,6 @@ public class TopologicalSortTask2 {
         public Counter(int value) {
             this.value = value;
         }
-
 
         public int incrementAndGet() {
             return ++value;
