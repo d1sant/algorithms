@@ -1,13 +1,15 @@
 package com.my.algorithms.week3.second;
 
 import com.my.algorithms.tools.Heaps;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Implementation of minimal heap.
- * <p/>
- * TODO: Constructor with collection with building heap; iterator, findElement
+ *
+ * TODO: iterator, indexOf using binary search
  */
 public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
@@ -21,6 +23,15 @@ public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
     public MinBinaryHeap(final int size) {
         this.heap = new Object[size];
         this.lastIndex = -1;
+    }
+
+    public MinBinaryHeap(final Collection<T> values) {
+        Object[] array = values.toArray();
+        this.heap = array;
+        this.lastIndex = array.length - 1;
+        for (int index = (array.length >>> 1) + 1; index >= 0; index--) {
+            siftDownMax(index, lastIndex);
+        }
     }
 
     protected MinBinaryHeap(final T[] heap) {
@@ -79,9 +90,18 @@ public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
         final Integer[] valueRemove = {1, 2, 3, 4, 5, 6, 7, 8};
         final MinBinaryHeap<Integer> heapRemove = new MinBinaryHeap<Integer>(valueRemove);
-        for (int value = 8; value >= 0; value--) {
+        System.out.println("Initial heap: " + Arrays.toString(heapRemove.getHeap()));
+        for (int value = 8; value >= 1; value--) {
             heapRemove.remove(value);
             System.out.println("Removed heap: " + Arrays.toString(heapRemove.getHeap()));
+        }
+        System.out.println("Removed heap length: " + heapRemove.size() + "\n");
+
+        final Collection<Integer> valuesBuild = Arrays.asList(9, 8, 7, 6, 5, 4, 3, 2, 1);
+        final MinBinaryHeap<Integer> heapBuild = new MinBinaryHeap<Integer>(valuesBuild);
+        System.out.println("Built heap: " + Arrays.toString(heapBuild.getHeap()));
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Extracted value: " + heapBuild.extract());
         }
     }
 
