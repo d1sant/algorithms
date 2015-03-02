@@ -7,21 +7,21 @@ import java.util.Arrays;
 /**
  * Implementation of minimal heap.
  */
-public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> {
+public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
     private static final int INITIAL_HEAP_SIZE = 100;
     private static final int RESIZE_FACTOR = 2;
 
-    public MinPriorityHeap() {
+    public MinBinaryHeap() {
         this(INITIAL_HEAP_SIZE);
     }
 
-    public MinPriorityHeap(final int size) {
+    public MinBinaryHeap(final int size) {
         this.heap = new Object[size];
         this.lastIndex = -1;
     }
 
-    protected MinPriorityHeap(final T[] heap) {
+    protected MinBinaryHeap(final T[] heap) {
         this.heap = heap;
         this.lastIndex = heap.length - 1;
     }
@@ -37,7 +37,7 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
         System.out.println(Arrays.toString(values) + "\n");
 
         final Integer[] valuesSiftUp = {1, 2, 3, 5, 8, 2};
-        final AbstractArrayHeap<Integer> heapSiftUp = new MinPriorityHeap<Integer>(valuesSiftUp);
+        final AbstractBinaryHeap<Integer> heapSiftUp = new MinBinaryHeap<Integer>(valuesSiftUp);
         System.out.println("Initial heap: " + Arrays.toString(valuesSiftUp));
         System.out.println("Sifted up to index: " + Heaps.siftUpMin(valuesSiftUp, 5));
         System.out.println("Sifted up heap: " + Arrays.toString(valuesSiftUp) + "\n");
@@ -47,7 +47,7 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
         System.out.println("Inserted index: " + heapSiftUp.insert(12));
         System.out.println("Inserted heap: " + Arrays.toString(heapSiftUp.getHeap()) + "\n");
 
-        final AbstractArrayHeap<Integer> heapInsert = new MinPriorityHeap<Integer>(15);
+        final AbstractBinaryHeap<Integer> heapInsert = new MinBinaryHeap<Integer>(15);
         for (int i = 1; i < 15; i++) {
             heapInsert.insert(i);
         }
@@ -59,7 +59,7 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
         System.out.println("Sifted down heap: " + Arrays.toString(valuesSiftDown) + "\n");
 
         final Integer[] valuesExtract = {1, 2, 3, 4, 5, 6, 7};
-        final MinPriorityHeap<Integer> heapExtract = new MinPriorityHeap<Integer>(valuesExtract);
+        final MinBinaryHeap<Integer> heapExtract = new MinBinaryHeap<Integer>(valuesExtract);
         System.out.println("Initial heap: " + Arrays.toString(heapExtract.getHeap()));
         for (int i = 1; i <= 7; i++) {
             System.out.println("Extracted value: " + heapExtract.extract());
@@ -68,7 +68,7 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
         System.out.println("Extracted heap: " + Arrays.toString(heapExtract.getHeap()) + "\n");
 
         final Integer[] valueChange = {1, 2, 3, 4, 5, 6, 7};
-        final MinPriorityHeap<Integer> heapChange = new MinPriorityHeap<Integer>(valueChange);
+        final MinBinaryHeap<Integer> heapChange = new MinBinaryHeap<Integer>(valueChange);
         System.out.println("Initial heap: " + Arrays.toString(heapChange.getHeap()));
         System.out.println("Changed to index: " + heapChange.change(4, 9));
         System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()));
@@ -76,7 +76,7 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
         System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()) + "\n");
 
         final Integer[] valueRemove = {1, 2, 3, 4, 5, 6, 7, 8};
-        final MinPriorityHeap<Integer> heapRemove = new MinPriorityHeap<Integer>(valueRemove);
+        final MinBinaryHeap<Integer> heapRemove = new MinBinaryHeap<Integer>(valueRemove);
         for (int index = 7; index >= 0; index--) {
             heapRemove.remove(index);
             System.out.println("Removed heap: " + Arrays.toString(heapRemove.getHeap()));

@@ -3,7 +3,7 @@ package com.my.algorithms.week3.second;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class ArrayHeapTask1 {
+public class MaxBinaryHeapTask1 {
 
     public static void main(final String[] args) {
         final Scanner scanner = new Scanner(System.in);

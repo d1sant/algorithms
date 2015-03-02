@@ -2,9 +2,8 @@ package com.my.algorithms.week6.second;
 
 import com.my.algorithms.domain.dto.Pair;
 import com.my.algorithms.tools.Graphs;
-import com.my.algorithms.week3.second.AbstractArrayHeap;
 import com.my.algorithms.week3.second.Heap;
-import com.my.algorithms.week3.second.MinPriorityHeap;
+import com.my.algorithms.week3.second.MinBinaryHeap;
 
 import java.util.Arrays;
 
@@ -64,7 +63,8 @@ public class Dijkstra {
         Arrays.fill(distances, Integer.MAX_VALUE);
         final int[] previous = new int[graph.length];
         Arrays.fill(previous, -1);
-        final Heap<Integer> priorityQueue = new MinPriorityHeap<Integer>(graph.length);
+        distances[vertex] = 0;
+        final Heap<Integer> priorityQueue = new MinBinaryHeap<Integer>(graph.length); // TODO initialize it with array of distances
 
         return new Pair<int[], int[]>(distances, previous);
     }

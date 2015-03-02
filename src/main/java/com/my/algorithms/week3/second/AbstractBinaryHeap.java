@@ -6,7 +6,7 @@ import static com.my.algorithms.tools.Arrays.swap;
  * Heap algorithm implementation based on array storage.
  * In order to extend intrinsic array we need create new one with doubled size and copy elements from old array.
  */
-public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T> {
+public abstract class AbstractBinaryHeap<T extends Comparable> implements Heap<T> {
 
     protected Object[] heap;
     protected int lastIndex;
