@@ -29,8 +29,8 @@ public class ObjectHeap implements Heap<Integer> {
     }
 
     @Override
-    public void remove(final int index) {
-        // TODO implement me
+    public boolean remove(final Integer value) {
+        return false; // TODO implement me
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ObjectHeap implements Heap<Integer> {
     }
 
     @Override
-    public int change(final int index, final Integer value) {
+    public int change(final Integer value, final Integer newValue) {
         return -1; // TODO implement me
     }
 

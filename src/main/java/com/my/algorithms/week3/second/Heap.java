@@ -29,11 +29,11 @@ public interface Heap<T extends Comparable> {
     int insert(final T value);
 
     /**
-     * Removes element by its index.
+     * Removes element.
      *
-     * @param index index of element
+     * @param value element
      */
-    void remove(final int index);
+    boolean remove(final T value);
 
     /**
      * Gets element with max/min priority (depends on specific implementation)
@@ -50,11 +50,11 @@ public interface Heap<T extends Comparable> {
     T extract();
 
     /**
-     * Changes priority of element with specified index.
+     * Changes priority of element.
      *
-     * @param index index of element to be changed
-     * @param value priority of element
+     * @param value element to be changed
+     * @param newValue priority of element
      * @return changed index of element in this heap
      */
-    int change(final int index, final T value);
+    int change(final T value, final T newValue);
 }

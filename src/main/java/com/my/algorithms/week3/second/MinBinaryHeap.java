@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 /**
  * Implementation of minimal heap.
- *
- * TODO: Constructor with collection with building heap; iterator, findElement using binary search (for priority change)
+ * <p/>
+ * TODO: Constructor with collection with building heap; iterator, findElement
  */
 public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
@@ -74,13 +74,13 @@ public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
         System.out.println("Initial heap: " + Arrays.toString(heapChange.getHeap()));
         System.out.println("Changed to index: " + heapChange.change(4, 9));
         System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()));
-        System.out.println("Changed to index: " + heapChange.change(4, 1));
+        System.out.println("Changed to index: " + heapChange.change(9, 1));
         System.out.println("Changed heap: " + Arrays.toString(heapChange.getHeap()) + "\n");
 
         final Integer[] valueRemove = {1, 2, 3, 4, 5, 6, 7, 8};
         final MinBinaryHeap<Integer> heapRemove = new MinBinaryHeap<Integer>(valueRemove);
-        for (int index = 7; index >= 0; index--) {
-            heapRemove.remove(index);
+        for (int value = 8; value >= 0; value--) {
+            heapRemove.remove(value);
             System.out.println("Removed heap: " + Arrays.toString(heapRemove.getHeap()));
         }
     }
@@ -97,14 +97,20 @@ public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
     }
 
     @Override
-    public void remove(final int index) {
-        siftUp(index, new Priority<T>() {
-            @Override
-            public boolean compare(T first, T second) {
-                return first != second;
-            }
-        });
-        extract();
+    public boolean remove(final T value) {
+        final int index = indexOf(value);
+        if (index == -1) {
+            return false;
+        } else {
+            siftUp(index, new Priority<T>() {
+                @Override
+                public boolean compare(T first, T second) {
+                    return first != second;
+                }
+            });
+            extract();
+            return true;
+        }
     }
 
     @Override
@@ -120,18 +126,34 @@ public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
     }
 
     @Override
-    public int change(final int index, final T value) {
+    public int change(final T value, final T newValue) {
         final int result;
-        final T current = get(index);
-        heap[index] = value;
-        if (compare(current, value) > 0) {
-            result = siftUpMin(index);
-        } else if (compare(current, value) < 0) {
-            result = siftDownMax(index, lastIndex);
+        final int index = indexOf(value);
+        if (index == -1) {
+            result = -1;
         } else {
-            result = index;
+            final T current = get(index);
+            heap[index] = newValue;
+            if (compare(current, newValue) > 0) {
+                result = siftUpMin(index);
+            } else if (compare(current, newValue) < 0) {
+                result = siftDownMax(index, lastIndex);
+            } else {
+                result = index;
+            }
         }
         return result;
+    }
+
+    private int indexOf(T value) {
+        if (value != null) {
+            for (int i = 0; i < heap.length; i++) {
+                if (value.equals(heap[i])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     @SuppressWarnings("unchecked")
