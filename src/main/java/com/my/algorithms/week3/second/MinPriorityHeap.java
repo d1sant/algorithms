@@ -4,9 +4,6 @@ import com.my.algorithms.tools.Heaps;
 
 import java.util.Arrays;
 
-import static com.my.algorithms.tools.Heaps.siftDownMax;
-import static com.my.algorithms.tools.Heaps.siftUpMin;
-
 /**
  * Implementation of minimal heap.
  */
@@ -99,7 +96,12 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
 
     @Override
     public void remove(final int index) {
-        change(index, getMinKey()); // TODO Fix me
+        siftUp(index, new Priority<T>() {
+            @Override
+            public boolean compare(T first, T second) {
+                return first != second;
+            }
+        });
         extract();
     }
 
@@ -132,11 +134,15 @@ public class MinPriorityHeap<T extends Comparable> extends AbstractArrayHeap<T> 
 
     @SuppressWarnings("unchecked")
     private int compare(final Object x, final Object y) {
-        return ((T) x).compareTo((T) y);
-    }
-
-    @Override
-    public T getMinKey() {
-        return null; // TODO Implement me
+        if (x == null && y != null) {
+            return -1;
+        } else if (x != null && y == null) {
+            return 1;
+        }
+        if (((T) x) != null) {
+            return ((T) x).compareTo(y);
+        } else {
+            return -1;
+        }
     }
 }

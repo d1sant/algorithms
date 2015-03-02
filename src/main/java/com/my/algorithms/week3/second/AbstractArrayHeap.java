@@ -1,10 +1,6 @@
 package com.my.algorithms.week3.second;
 
-import java.util.Arrays;
-
 import static com.my.algorithms.tools.Arrays.swap;
-import static com.my.algorithms.tools.Heaps.siftDownMax;
-import static com.my.algorithms.tools.Heaps.siftUpMin;
 
 /**
  * Heap algorithm implementation based on array storage.
@@ -14,8 +10,6 @@ public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T>
 
     protected Object[] heap;
     protected int lastIndex;
-
-    public abstract T getMinKey();
 
     @Override
     public boolean isEmpty() {
@@ -38,7 +32,9 @@ public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T>
 
     @SuppressWarnings("unchecked")
     protected T[] getHeap() {
-        return (T[]) heap;
+        final T[] copy = (T[]) new Comparable[heap.length];
+        System.arraycopy(heap, 0, copy, 0, heap.length);
+        return copy;
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +65,7 @@ public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T>
      * @param priority compare priority for building different heaps (ex. max, min)
      * @return index of sifted up element
      */
-    private int siftUp(final int index, final Priority<T> priority) {
+    protected int siftUp(final int index, final Priority<T> priority) {
         int parentIndex = (index - 1) / 2;
         int childIndex = index;
         while (parentIndex >= 0 && priority.compare(get(parentIndex), get(childIndex))) {
@@ -105,7 +101,7 @@ public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T>
      * @param priority priority for building different heaps (ex. max, min)
      * @return index of sifted down element
      */
-    private int siftDown(final int index, final int lastIndex, final Priority<T> priority) {
+    protected int siftDown(final int index, final int lastIndex, final Priority<T> priority) {
         int parentIndex = index;
         while (true) {
             int childIndex = parentIndex * 2 + 1;
@@ -124,7 +120,7 @@ public abstract class AbstractArrayHeap<T extends Comparable> implements Heap<T>
         return parentIndex;
     }
 
-    private interface Priority<T extends Comparable> {
+    protected interface Priority<T extends Comparable> {
         boolean compare(final T first, final T second);
     }
 }
