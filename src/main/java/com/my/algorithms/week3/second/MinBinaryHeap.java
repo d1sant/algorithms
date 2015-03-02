@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 /**
  * Implementation of minimal heap.
+ *
+ * TODO: Constructor with collection with building heap; iterator, findElement using binary search (for priority change)
  */
 public class MinBinaryHeap<T extends Comparable> extends AbstractBinaryHeap<T> {
 
