@@ -11,6 +11,12 @@ public class Arrays {
         array[fromIndex] = to;
     }
 
+    public static <T> void swap(final T[] array, final int fromIndex, final int toIndex) {
+        final T to = array[toIndex];
+        array[toIndex] = array[fromIndex];
+        array[fromIndex] = to;
+    }
+
     public static int[] merge(final int[] first, final int[] second) {
         final int[] result = new int[first.length + second.length];
         int i = 0, j = 0, k = 0;

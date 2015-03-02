@@ -9,6 +9,16 @@ public class ObjectHeap implements Heap<Integer> {
         final ObjectHeap heap = new ObjectHeap();
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false; // TODO Implement me
+    }
+
+    @Override
+    public int size() {
+        return 0; // TODO implement me
+    }
+
     /**
      * Insert value to the heap.
      * @param value value of element

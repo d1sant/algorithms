@@ -166,7 +166,7 @@ public class Graphs {
         if (graph[vFrom] != null) {
             int length = graph[vFrom].length;
             for (int edgeIndex = 0; edgeIndex < length; edgeIndex++) {
-                if (graph[vFrom][edgeIndex][0] == vTo) {
+                if (graph[vFrom][edgeIndex][0] == vTo && graph[vFrom][edgeIndex][1] == weight) {
                     return;
                 }
             }
