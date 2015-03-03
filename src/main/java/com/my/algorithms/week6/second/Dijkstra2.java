@@ -13,7 +13,7 @@ import static com.my.algorithms.tools.Graphs.addDirected;
 
 /**
  * Dijkstra algorithm. Looks for the shortest ways from given vertex in weighted graph.
- * Uses build in PriorityQueue.
+ * Uses built in PriorityQueue.
  */
 public class Dijkstra2 {
 

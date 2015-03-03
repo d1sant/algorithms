@@ -107,7 +107,7 @@ public class Dijkstra {
         System.out.println("Edge [" + vFrom + ", " + wGraph[vFrom][vTo][0] + "]: " + wGraph[vFrom][vTo][1]);
     }
 
-    private static class Edge implements Comparable<Edge> {
+    public static class Edge implements Comparable<Edge> {
 
         final int weight;
         final int vertex;
