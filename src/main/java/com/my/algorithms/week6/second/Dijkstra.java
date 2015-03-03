@@ -10,7 +10,7 @@ import java.util.Arrays;
 import static com.my.algorithms.tools.Graphs.addDirected;
 
 /**
- * Dijkstra algorithm. Looks for the shortest ways from given vertex.
+ * Dijkstra algorithm. Looks for the shortest ways from given vertex in weighted graph.
  */
 public class Dijkstra {
 
