@@ -1,7 +1,6 @@
 package com.my.algorithms.week3.second;
 
 import com.my.algorithms.tools.Heaps;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 import java.util.Arrays;
 import java.util.Collection;
