@@ -33,7 +33,7 @@ public class BellmanFordExtended {
         addDirected(graph, 4, 3, -18);
         addDirected(graph, 6, 1, -1);
 
-        processAndPrint(graph, 0); // 0 10 - - - *
+        processAndPrintln(graph, 0); // 0 10 - - - *
 
         processAndPrint("5 5 1  1 3 -5  3 2 2  2 1 1  4 3 3  3 5 1"); // - - - * -
 
@@ -64,10 +64,23 @@ public class BellmanFordExtended {
     }
 
     private static void processAndPrint(Pair<int[][][], Integer> input) {
-        processAndPrint(input.first, input.second);
+        final String[] result = process(input.first, input.second);
+        final StringBuilder output = new StringBuilder();
+        for (String str : result) {
+            output.append(str).append(' ');
+        }
+        output.deleteCharAt(output.length() - 1);
+        System.out.println(output.toString());
     }
 
-    private static void processAndPrint(int[][][] graph, final int vertexFrom) {
+    private static void processAndPrintln(final int[][][] graph, final int vertexFrom) {
+        final String[] result = process(graph, vertexFrom);
+        for (final String str : result) {
+            System.out.println(str);
+        }
+    }
+
+    private static String[] process(int[][][] graph, final int vertexFrom) {
 
         System.out.println("\nWeighted Graph: " + Graphs.toString(graph));
         final Triple<int[], int[], Boolean> bfsResult = bellmanFord(graph, vertexFrom);
@@ -78,10 +91,12 @@ public class BellmanFordExtended {
         final Pair<Integer, int[][]> dfsResult = dfs(graph);
         final Set<Integer> cycledVertexes = bfsResult.third ? getCycledVertexes(bfsResult.second, dfsResult.first, dfsResult.second) : Collections.<Integer> emptySet();
 
+        final String[] result = new String[graph.length];
         for (int i = 0; i < bfsResult.first.length; i++) {
             int distance = bfsResult.first[i];
-            System.out.println(cycledVertexes.contains(i) ? "-" : (distance == Integer.MAX_VALUE ? "*" : distance ));
+            result[i] = cycledVertexes.contains(i) ? "-" : (distance == Integer.MAX_VALUE ? "*" : String.valueOf(distance));
         }
+        return result;
     }
 
     private static Pair<Integer, int[][]> dfs(final int[][][] graph) {
