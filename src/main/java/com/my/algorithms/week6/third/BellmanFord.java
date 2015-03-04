@@ -1,6 +1,5 @@
 package com.my.algorithms.week6.third;
 
-import com.my.algorithms.domain.dto.Pair;
 import com.my.algorithms.domain.dto.Triple;
 import com.my.algorithms.tools.Graphs;
 
@@ -14,7 +13,7 @@ import static com.my.algorithms.tools.Graphs.addDirected;
  */
 public class BellmanFord {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         final int[][][] graph = new int[5][][];
         addDirected(graph, 1, 2, 4);
