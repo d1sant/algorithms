@@ -62,7 +62,7 @@ public class CycleSearch {
                 if (times[edge] == null) {
                     explore(graph, edge, times, time, cycle);
                 } else if (times[edge].getEnd() == 0) {
-                    System.out.println("fromVertex: " + vertex + ", toVertex: " + edge);
+                    System.out.println("Cycle fromVertex: " + vertex + ", toVertex: " + edge);
                     cycle.incrementAndGet();
                 }
             }
