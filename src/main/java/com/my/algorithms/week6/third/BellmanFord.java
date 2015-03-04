@@ -13,6 +13,9 @@ import static com.my.algorithms.tools.Graphs.addDirected;
  */
 public class BellmanFord {
 
+    public static final long MAX_VALUE_LONG = 1000000000000L;
+    public static final int MAX_VALUE_INT = Integer.MAX_VALUE;
+
     public static void main(final String[] args) {
 
         final int[][][] graph = new int[5][][];
@@ -43,7 +46,7 @@ public class BellmanFord {
 
     public static Triple<int[], int[], Boolean> bellmanFord(final int[][][] graph, final int vertex) {
         final int[] distances = new int[graph.length];
-        Arrays.fill(distances, Integer.MAX_VALUE);
+        Arrays.fill(distances, MAX_VALUE_INT);
         final int[] previous = new int[graph.length];
         Arrays.fill(previous, -1);
         distances[vertex] = 0;
@@ -74,5 +77,40 @@ public class BellmanFord {
             }
         }
         return new Triple<int[], int[], Boolean>(distances, previous, isNegativeCycle);
+    }
+
+    public static Triple<long[], int[], Boolean> bellmanFord(final long[][][] graph, final int vertex) {
+        final long[] distances = new long[graph.length];
+        Arrays.fill(distances, MAX_VALUE_LONG);
+        final int[] previous = new int[graph.length];
+        Arrays.fill(previous, -1);
+        distances[vertex] = 0;
+        boolean isNegativeCycle = false;
+        for (int i = 0; i < graph.length + 1; i++) {
+            boolean isRelaxed = false;
+            for (int vertexFrom = 0; vertexFrom < graph.length; vertexFrom++) {
+                final long[][] edges = graph[vertexFrom];
+                if (edges != null) {
+                    for (long[] edge : edges) {
+                        final int vertexTo = (int) edge[0];
+                        final long weight = edge[1];
+                        final long relaxedDistanceTo = distances[vertexFrom] + weight;
+                        if (distances[vertexTo] > relaxedDistanceTo) {
+                            distances[vertexTo] = (int) relaxedDistanceTo;
+                            previous[vertexTo] = vertexFrom;
+                            isRelaxed = true;
+                        }
+                    }
+                }
+            }
+            if (!isRelaxed) {
+                break;
+            }
+            if (i == graph.length) {
+                isNegativeCycle = true;
+                break;
+            }
+        }
+        return new Triple<long[], int[], Boolean>(distances, previous, isNegativeCycle);
     }
 }

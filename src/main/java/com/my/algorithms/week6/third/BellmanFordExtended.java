@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.my.algorithms.tools.Graphs.addDirected;
+import static com.my.algorithms.week6.third.BellmanFord.MAX_VALUE_LONG;
 import static com.my.algorithms.week6.third.BellmanFord.bellmanFord;
 
 /**
@@ -24,7 +25,7 @@ public class BellmanFordExtended {
 
     public static void main(final String[] args) {
 
-        final int[][][] graph = new int[6][][];
+        final long[][][] graph = new long[6][][];
         addDirected(graph, 1, 2, 10);
         addDirected(graph, 2, 3, 5);
         addDirected(graph, 1, 3, 100);
@@ -45,25 +46,27 @@ public class BellmanFordExtended {
 
         processAndPrint("7 8 4  1 2 -1  2 3 -1  3 1 -1  5 6 -1  6 7 -1  7 5 -1  4 1 -1  4 5 -1"); // - - - 0 - - -
 
+        processAndPrint("8 8 1  1 2 3  2 3 6  5 3 1  3 4 8  6 4 10  6 7 -5  7 8 1  8 6 2"); // 0 3 9 17 * * * *
+
     }
 
-    private static Pair<int[][][], Integer> parse(final String input) {
+    private static Pair<long[][][], Integer> parse(final String input) {
         final String[] params = input.split("\\s+");
-        final int[][][] graph = new int[Integer.valueOf(params[0])][][];
+        final long[][][] graph = new long[Integer.valueOf(params[0])][][];
         final int vertexFrom = Integer.valueOf(params[2]) - 1;
         int index = 3;
         while (index < params.length) {
             addDirected(graph, Integer.valueOf(params[index]), Integer.valueOf(params[index + 1]), Integer.valueOf(params[index + 2]));
             index = index + 3;
         }
-        return new Pair<int[][][], Integer>(graph, vertexFrom);
+        return new Pair<long[][][], Integer>(graph, vertexFrom);
     }
 
     private static void processAndPrint(final String inputStr) {
         processAndPrint(parse(inputStr));
     }
 
-    private static void processAndPrint(Pair<int[][][], Integer> input) {
+    private static void processAndPrint(Pair<long[][][], Integer> input) {
         final String[] result = process(input.first, input.second);
         final StringBuilder output = new StringBuilder();
         for (String str : result) {
@@ -73,17 +76,17 @@ public class BellmanFordExtended {
         System.out.println(output.toString());
     }
 
-    private static void processAndPrintln(final int[][][] graph, final int vertexFrom) {
+    private static void processAndPrintln(final long[][][] graph, final int vertexFrom) {
         final String[] result = process(graph, vertexFrom);
         for (final String str : result) {
             System.out.println(str);
         }
     }
 
-    private static String[] process(int[][][] graph, final int vertexFrom) {
+    private static String[] process(long[][][] graph, final int vertexFrom) {
 
         System.out.println("\nWeighted Graph: " + Graphs.toString(graph));
-        final Triple<int[], int[], Boolean> bfsResult = bellmanFord(graph, vertexFrom);
+        final Triple<long[], int[], Boolean> bfsResult = bellmanFord(graph, vertexFrom);
         System.out.println("Distances: " + Arrays.toString(bfsResult.first));
         System.out.println("Previous: " + Arrays.toString(bfsResult.second));
         System.out.println("Is there a negative cycle: " + bfsResult.third + "\n");
@@ -93,13 +96,13 @@ public class BellmanFordExtended {
 
         final String[] result = new String[graph.length];
         for (int i = 0; i < bfsResult.first.length; i++) {
-            int distance = bfsResult.first[i];
-            result[i] = cycledVertexes.contains(i) ? "-" : (distance == Integer.MAX_VALUE ? "*" : String.valueOf(distance));
+            final long distance = bfsResult.first[i];
+            result[i] = cycledVertexes.contains(i) ? "-" : (distance == MAX_VALUE_LONG ? "*" : String.valueOf(distance));
         }
         return result;
     }
 
-    private static Pair<Integer, int[][]> dfs(final int[][][] graph) {
+    private static Pair<Integer, int[][]> dfs(final long[][][] graph) {
         final WorkingTime[] visited = new WorkingTime[graph.length];
         final Counter cycleIndex = new Counter(0);
         final int[][] cycles = new int[graph.length][];
@@ -107,7 +110,7 @@ public class BellmanFordExtended {
         return new Pair<Integer, int[][]>(cycleIndex.get(), cycles);
     }
 
-    private static void dfs(final int[][][] graph, final WorkingTime[] times, final Counter cycleIndex, final int[][] cycles) {
+    private static void dfs(final long[][][] graph, final WorkingTime[] times, final Counter cycleIndex, final int[][] cycles) {
         final Counter time = new Counter(0);
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (times[vertexIndex] == null) {
@@ -116,11 +119,11 @@ public class BellmanFordExtended {
         }
     }
 
-    private static void explore(final int[][][] graph, final int vertex, final WorkingTime[] times, final Counter time, final Counter cycleIndex, final int[][] cycles) {
+    private static void explore(final long[][][] graph, final int vertex, final WorkingTime[] times, final Counter time, final Counter cycleIndex, final int[][] cycles) {
         times[vertex] = new WorkingTime(time.incrementAndGet());
         if (graph[vertex] != null) {
             for (int vertexToIndex = 0; vertexToIndex < graph[vertex].length; vertexToIndex++) {
-                final int vertexTo = graph[vertex][vertexToIndex][0];
+                final int vertexTo = (int) graph[vertex][vertexToIndex][0];
                 if (times[vertexTo] == null) {
                     explore(graph, vertexTo, times, time, cycleIndex, cycles);
                 } else if (times[vertexTo].getEnd() == 0) {

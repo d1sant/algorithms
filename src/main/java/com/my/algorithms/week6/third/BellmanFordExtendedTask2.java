@@ -10,27 +10,27 @@ public class BellmanFordExtendedTask2 {
         final int vertexes = scanner.nextInt();
         final int edges = scanner.nextInt();
         final int vertexFrom = scanner.nextInt() - 1;
-        final int[][][] graph = new int[vertexes][][];
+        final long[][][] graph = new long[vertexes][][];
         scanner.nextLine();
         for (int index = 0; index < edges; index++) {
             addDirected(graph, scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
         }
 
-        final Triple<int[], int[], Boolean> bfsResult = bellmanFord(graph, vertexFrom);
+        final Triple<long[], int[], Boolean> bfsResult = bellmanFord(graph, vertexFrom);
         final Pair<Integer, int[][]> dfsResult = dfs(graph);
         final Set<Integer> cycledVertexes = bfsResult.third ? getCycledVertexes(bfsResult.second, dfsResult.first, dfsResult.second) : Collections.<Integer> emptySet();
 
         for (int i = 0; i < bfsResult.first.length; i++) {
-            int distance = bfsResult.first[i];
+            long distance = bfsResult.first[i];
             System.out.println(cycledVertexes.contains(i) ? "-" : (distance == Integer.MAX_VALUE ? "*" : distance ));
         }
     }
 
-    private static void addDirected(final int[][][] graph, final int vertex, final int vertexTo, final int weight) {
+    private static void addDirected(final long[][][] graph, final int vertex, final int vertexTo, final long weight) {
         addEdge(graph, vertex - 1, vertexTo - 1, weight);
     }
 
-    private static void addEdge(final int[][][] graph, final int vFrom, final int vTo, final int weight) {
+    private static void addEdge(final long[][][] graph, final int vFrom, final int vTo, final long weight) {
         if (graph[vFrom] != null) {
             int length = graph[vFrom].length;
             for (int edgeIndex = 0; edgeIndex < length; edgeIndex++) {
@@ -38,17 +38,17 @@ public class BellmanFordExtendedTask2 {
                     return;
                 }
             }
-            final int[][] edges = new int[length + 1][];
+            final long[][] edges = new long[length + 1][];
             System.arraycopy(graph[vFrom], 0, edges, 0, length);
-            edges[length] = new int[]{vTo, weight};
+            edges[length] = new long[]{vTo, weight};
             graph[vFrom] = edges;
         } else {
-            graph[vFrom] = new int[][]{{vTo, weight}};
+            graph[vFrom] = new long[][]{{vTo, weight}};
         }
     }
 
-    private static Triple<int[], int[], Boolean> bellmanFord(final int[][][] graph, final int vertex) {
-        final int[] distances = new int[graph.length];
+    private static Triple<long[], int[], Boolean> bellmanFord(final long[][][] graph, final int vertex) {
+        final long[] distances = new long[graph.length];
         Arrays.fill(distances, Integer.MAX_VALUE);
         final int[] previous = new int[graph.length];
         Arrays.fill(previous, -1);
@@ -57,12 +57,12 @@ public class BellmanFordExtendedTask2 {
         for (int i = 0; i < graph.length + 1; i++) {
             boolean isRelaxed = false;
             for (int vertexFrom = 0; vertexFrom < graph.length; vertexFrom++) {
-                final int[][] edges = graph[vertexFrom];
+                final long[][] edges = graph[vertexFrom];
                 if (edges != null) {
-                    for (int[] edge : edges) {
-                        final int vertexTo = edge[0];
-                        final int weight = edge[1];
-                        final long relaxedDistanceTo = (long) distances[vertexFrom] + weight;
+                    for (long[] edge : edges) {
+                        final int vertexTo = (int) edge[0];
+                        final long weight = edge[1];
+                        final long relaxedDistanceTo = distances[vertexFrom] + weight;
                         if (distances[vertexTo] > relaxedDistanceTo) {
                             distances[vertexTo] = (int) relaxedDistanceTo;
                             previous[vertexTo] = vertexFrom;
@@ -79,10 +79,10 @@ public class BellmanFordExtendedTask2 {
                 break;
             }
         }
-        return new Triple<int[], int[], Boolean>(distances, previous, isNegativeCycle);
+        return new Triple<long[], int[], Boolean>(distances, previous, isNegativeCycle);
     }
 
-    private static Pair<Integer, int[][]> dfs(final int[][][] graph) {
+    private static Pair<Integer, int[][]> dfs(final long[][][] graph) {
         final WorkingTime[] visited = new WorkingTime[graph.length];
         final Counter cycleIndex = new Counter(0);
         final int[][] cycles = new int[graph.length][];
@@ -90,7 +90,7 @@ public class BellmanFordExtendedTask2 {
         return new Pair<Integer, int[][]>(cycleIndex.get(), cycles);
     }
 
-    private static void dfs(final int[][][] graph, final WorkingTime[] times, final Counter cycleIndex, final int[][] cycles) {
+    private static void dfs(final long[][][] graph, final WorkingTime[] times, final Counter cycleIndex, final int[][] cycles) {
         final Counter time = new Counter(0);
         for (int vertexIndex = 0; vertexIndex < graph.length; vertexIndex++) {
             if (times[vertexIndex] == null) {
@@ -99,11 +99,11 @@ public class BellmanFordExtendedTask2 {
         }
     }
 
-    private static void explore(final int[][][] graph, final int vertex, final WorkingTime[] times, final Counter time, final Counter cycleIndex, final int[][] cycles) {
+    private static void explore(final long[][][] graph, final int vertex, final WorkingTime[] times, final Counter time, final Counter cycleIndex, final int[][] cycles) {
         times[vertex] = new WorkingTime(time.incrementAndGet());
         if (graph[vertex] != null) {
             for (int vertexToIndex = 0; vertexToIndex < graph[vertex].length; vertexToIndex++) {
-                final int vertexTo = graph[vertex][vertexToIndex][0];
+                final int vertexTo = (int) graph[vertex][vertexToIndex][0];
                 if (times[vertexTo] == null) {
                     explore(graph, vertexTo, times, time, cycleIndex, cycles);
                 } else if (times[vertexTo].getEnd() == 0) {

@@ -31,7 +31,7 @@ public class Graphs {
     /**
      * Presents weighted graph as string.
      *
-     * @param graph array presented graph
+     * @param graph array of int presented graph
      * @return string presented graph
      */
     public static String toString(final int[][][] graph) {
@@ -40,6 +40,31 @@ public class Graphs {
             result.append('{');
             if (edges != null) {
                 for (final int[] edge : edges) {
+                    result.append(edge[0]).append(':').append(edge[1]).append(", ");
+                }
+                result.delete(result.length() - 2, result.length());
+            } else {
+                result.append("null");
+            }
+            result.append('}');
+        }
+        return result.toString();
+    }
+
+    /**
+     * Presents weighted graph as string.
+     *
+     * @param graph array of long presented graph
+     * @return string presented graph
+     *
+     * TODO refactor me: cast somehow int[][][] to long[][][] and use one method for 3-dimensional arrays
+     */
+    public static String toString(final long[][][] graph) {
+        final StringBuilder result = new StringBuilder();
+        for (long[][] edges : graph) {
+            result.append('{');
+            if (edges != null) {
+                for (final long[] edge : edges) {
                     result.append(edge[0]).append(':').append(edge[1]).append(", ");
                 }
                 result.delete(result.length() - 2, result.length());
@@ -122,6 +147,10 @@ public class Graphs {
         addEdge(graph, vertex - 1, vertexTo - 1, weight);
     }
 
+    public static void addDirected(final long[][][] graph, final int vertex, final int vertexTo, final long weight) {
+        addEdge(graph, vertex - 1, vertexTo - 1, weight);
+    }
+
     /**
      * Adds directed normalized edge to unweighted graph.
      *
@@ -176,6 +205,26 @@ public class Graphs {
             graph[vFrom] = edges;
         } else {
             graph[vFrom] = new int[][]{{vTo, weight}};
+        }
+    }
+
+    /**
+     * TODO refactor me: cast somehow int[][][] to long[][][] and use one method for 3-dimensional arrays
+     */
+    protected static void addEdge(final long[][][] graph, final int vFrom, final int vTo, final long weight) {
+        if (graph[vFrom] != null) {
+            int length = graph[vFrom].length;
+            for (int edgeIndex = 0; edgeIndex < length; edgeIndex++) {
+                if (graph[vFrom][edgeIndex][0] == vTo && graph[vFrom][edgeIndex][1] == weight) {
+                    return;
+                }
+            }
+            final long[][] edges = new long[length + 1][];
+            System.arraycopy(graph[vFrom], 0, edges, 0, length);
+            edges[length] = new long[]{vTo, weight};
+            graph[vFrom] = edges;
+        } else {
+            graph[vFrom] = new long[][]{{vTo, weight}};
         }
     }
 
