@@ -9,7 +9,7 @@ public class Randoms {
 
     private static final Random random = new Random();
 
-    public static int randInt(final int max, final int min) {
+    public static int randInt(final int min, final int max) {
         return random.nextInt(max - min) + min;
     }
 }

@@ -14,7 +14,7 @@ public class RandomSelect {
         if (array.length == 1) {
             return array;
         }
-        final int pivot = randInt(0, array.length);
+        final int pivot = randInt(array.length, 0);
         return select(Arrays.copyOfRange(array, 0, k), k); // TODO fix me
     }
 }

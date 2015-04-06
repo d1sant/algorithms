@@ -1,6 +1,5 @@
 package com.my.algorithms.week2.first;
 
-import java.util.Random;
 import static com.my.algorithms.tools.Randoms.randInt;
 
 /**
@@ -10,8 +9,6 @@ public class Multiplication {
 
     private static final int MAX = Integer.MAX_VALUE;
     private static final int MIN = MAX >> 1;
-
-    private static final Random random = new Random();
 
     public static void main(final String[] args) {
 
@@ -43,8 +40,8 @@ public class Multiplication {
 
     private static void benchmark(final boolean print, final Multiplicator mult) {
         for (int i = 0; i < 1000; i++) {
-            final int x = randInt(MAX, MIN);
-            final int y = randInt(MAX, MIN);
+            final int x = randInt(MIN, MAX);
+            final int y = randInt(MIN, MAX);
             final long result = mult.multiply(x, y);
             if (print) {
                 System.out.println(x + " * " + y + " = " + result);
