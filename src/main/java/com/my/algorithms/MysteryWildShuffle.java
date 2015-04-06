@@ -60,6 +60,8 @@ public class MysteryWildShuffle {
         System.out.println("MW on reels: " + Arrays.toString(mysteryWildsByReels));
         System.out.println("MW positions: " + Arrays.toString(positions));
 
+        System.out.println("\n" + toString(positions));
+
         for (final int screenIndex : positions) {
             final int x = screenIndex % NUM_REELS;
             final int y = screenIndex / NUM_REELS;
@@ -127,12 +129,40 @@ public class MysteryWildShuffle {
         final Set<Integer> pickFrom = new HashSet<Integer>(adjacent);
         pickFrom.retainAll(Arrays.asList(MW_POSITIONS_ON_REELS[x - 1]));
         pickFrom.removeAll(picked);
-        
+
 
         // x
 
         // x + 1
 
         return result;
+    }
+
+    private static String toString(final int[] wilds) {
+        return toString(wilds, null);
+    }
+
+    private static String toString(final int[] wilds, final Integer pivot) {
+        Arrays.sort(wilds);
+        int index = 0;
+        int wildIndex = 0;
+        final StringBuilder result = new StringBuilder(70);
+        while (index < MW_POSITIONS.length) {
+            result.append(' ');
+            if (pivot != null && pivot == index) {
+                result.append(" +");
+            } else if (wildIndex < wilds.length && index == wilds[wildIndex]) {
+                result.append(" -");
+                wildIndex++;
+            } else {
+                result.append(String.format("%2d", index));
+            }
+            result.append(' ');
+            if ((index + 1) % 5 == 0) {
+                result.append("\n");
+            }
+            index++;
+        }
+        return result.toString();
     }
 }
