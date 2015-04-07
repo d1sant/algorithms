@@ -47,4 +47,22 @@ public class Arrays {
             array[k++] = helper[i++];
         }
     }
+
+    // TODO rework it with reflection in sake of generalization
+    public static Integer[] toObject(final int[] intArray) {
+        final Integer[] result = new Integer[intArray.length];
+        for (int i = 0; i < intArray.length; i++) {
+            result[i] = intArray[i];
+        }
+        return result;
+    }
+
+    // TODO rework it with reflection in sake of generalization
+    public static int[] toPrimitive(final Integer[] integerArray) {
+        final int[] result = new int[integerArray.length];
+        for (int i = 0; i < integerArray.length; i++) {
+            result[i] = integerArray[i];
+        }
+        return result;
+    }
 }
