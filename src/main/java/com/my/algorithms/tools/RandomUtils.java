@@ -67,4 +67,23 @@ public class RandomUtils {
         }
         return retVal;
     }
+
+    public static Integer[] shuffle(Integer[] t) {
+        return shuffle(t, t.length);
+    }
+    public static Integer[] shuffle(Integer[] t, int limit) {
+        Integer[] retVal = new Integer[t.length];
+        System.arraycopy(t, 0, retVal, 0, t.length);
+
+        int lim = Math.min(retVal.length, limit);
+        for (int i = 0; i < lim; ++i) {
+            int modulo = lim -i;
+            int j = rnd.nextInt(modulo);
+            int x = retVal[i];
+            int xx= retVal[i+j];
+            retVal[i] = xx;
+            retVal[i+j] = x;
+        }
+        return retVal;
+    }
 }

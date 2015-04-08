@@ -23,7 +23,7 @@ public class MysteryWildShuffle {
             5, 6, 7, 8, 9,
             10, 11, 12, 13, 14};
 
-    private static final int[][] MW_POSITIONS_ON_REELS = {
+    private static final Integer[][] MW_POSITIONS_ON_REELS = {
             {0, 5, 10},
             {1, 6, 11},
             {2, 7, 12},
@@ -34,7 +34,7 @@ public class MysteryWildShuffle {
 
     private static double[][] scenario = new double[][]{SCENARIO_W_MG_3, SCENARIO_W_MG_2, SCENARIO_W_MG_1, SCENARIO_W_MG_2, SCENARIO_W_MG_1};
 
-    private static final int[][] ADJACENT_POSITIONS = {
+    private static final Integer[][] ADJACENT_POSITIONS = {
             {1, 5, 6},
             {0, 2, 3, 6, 7},
             {1, 3, 6, 7, 8},
@@ -55,20 +55,20 @@ public class MysteryWildShuffle {
     public static void main(String[] args) {
 
         // generateMysteryWildsInMG();
-        // generateMysteryWildsInFG();
+        generateMysteryWildsInFG(new int[]{3, 3, 3, 3, 3});
         // generateMysteryWildsInFG(new int[]{1, 0, 3, 1, 3});
 
-        generateMysteryWildsInFG(new int[]{3, 3, 3, 3, 3});
+        // generateMysteryWildsInFG();
     }
 
     private static void generateMysteryWildsInMG() {
 
-        final int[] mysteryWildsByReels = pickMysteryWildsByReels();
-        final int[] mysteryWildsPositions = pickMysteryWildsPositions(mysteryWildsByReels);
+        final int[] mysteryWildsByReels = getNumbersOfWildsByReels();
+        final Integer[] mysteryWildsPositions = pickMysteryWildsPositions(mysteryWildsByReels);
 
         System.out.println("=== Mystery Wilds in Main Game ===\n");
-        System.out.println("MW on reels: " + Arrays.toString(mysteryWildsByReels));
-        System.out.println("MW mysteryWildsPositions: " + Arrays.toString(mysteryWildsPositions));
+        System.out.println("Number of MW on reels: " + Arrays.toString(mysteryWildsByReels));
+        System.out.println("MW mystery wilds positions: " + Arrays.toString(mysteryWildsPositions));
         System.out.println("\n" + toString(mysteryWildsPositions));
 
         for (final int screenIndex : mysteryWildsPositions) {
@@ -79,108 +79,109 @@ public class MysteryWildShuffle {
     }
 
     private static void generateMysteryWildsInFG() {
-        generateMysteryWildsInFG(pickMysteryWildsByReels());
+        generateMysteryWildsInFG(getNumbersOfWildsByReels());
     }
 
-    private static void generateMysteryWildsInFG(final int[] mysteryWildsByReels) {
+    private static void generateMysteryWildsInFG(final int[] numberOfWildsByReels) {
 
         System.out.println("=== Mystery Wilds in Free Game ===\n");
-        System.out.println("MW on reels: " + Arrays.toString(mysteryWildsByReels) + "\n");
+        System.out.println("Number of MW on reels: " + Arrays.toString(numberOfWildsByReels) + "\n");
 
         final Set<Integer> pickedWilds = new HashSet<Integer>(MW_POSITIONS.length);
 
         int iteration = 0;
-        while (size(mysteryWildsByReels) > 0) {
+        while (size(numberOfWildsByReels) > 0) {
 
             System.out.println("----- Iteration " + ++iteration + " -----\n");
 
-            // Mystery wilds in array
-            int[] mysteryWilds = new int[0];
-            for (int reelIndex = 0; reelIndex < mysteryWildsByReels.length; reelIndex++) {
-                if (mysteryWildsByReels[reelIndex] > 0) {
-                    final int[] wilds = new int[mysteryWildsByReels[reelIndex]];
-                    Arrays.fill(wilds, reelIndex);
-                    mysteryWilds = concat(mysteryWilds, wilds);
-                }
-            }
+            // Mystery wilds in array (for uniform pick)
+            final int[] mysteryWilds = getWildsAsArray(numberOfWildsByReels);
             System.out.println("Mystery wilds: " + Arrays.toString(mysteryWilds));
 
             // Pick uniformly one random wild
-            final int mysteryWildIndex = Randoms.randInt(0, mysteryWilds.length);
-            final int mysteryWildReel = mysteryWilds[mysteryWildIndex];
-
-            // decrease number of mysteryWildsByReels
-            mysteryWildsByReels[mysteryWildReel] = mysteryWildsByReels[mysteryWildReel] - 1;
+            final int mysteryWildReel = mysteryWilds[Randoms.randInt(0, mysteryWilds.length)];
 
             // Pick uniformly position on the reel
-            final Set<Integer> wildsOnReel = new HashSet<Integer>(Arrays.asList(toObject(MW_POSITIONS_ON_REELS[mysteryWildReel])));
+            final Set<Integer> wildsOnReel = new HashSet<Integer>(Arrays.asList(MW_POSITIONS_ON_REELS[mysteryWildReel]));
             wildsOnReel.removeAll(pickedWilds);
             final int position = wildsOnReel.toArray(new Integer[wildsOnReel.size()])[Randoms.randInt(0, wildsOnReel.size())];
             pickedWilds.add(position);
+
+            // Decrease number of numberOfWildsByReels
+            numberOfWildsByReels[mysteryWildReel] = numberOfWildsByReels[mysteryWildReel] - 1;
 
             System.out.println("Pivot: " + position);
             System.out.println("Picked: " + pickedWilds + "\n");
 
             // Put, if possible, adjacent wilds
-            int[] adjacent = ADJACENT_POSITIONS[position];
+            final Integer[] adjacent = ADJACENT_POSITIONS[position];
             System.out.println("Adjacent: " + Arrays.toString(adjacent) + "\n");
 
-            pickAdjacent(position, pickedWilds, mysteryWildsByReels);
+            pickAdjacent(position, pickedWilds, numberOfWildsByReels);
         }
     }
 
-    private static int size(final int[] mysteryWildsByReels) {
+    private static int size(final int[] numberOfWildsByReels) {
         int size = 0;
-        for (final int wildsOnReel : mysteryWildsByReels) {
+        for (final int wildsOnReel : numberOfWildsByReels) {
             size += wildsOnReel;
         }
         return size;
     }
 
-    private static int[] pickMysteryWildsByReels() {
-        final int[] mysteryWildsByReels = new int[scenario.length];
-        for (int i = 0; i < scenario.length; i++) {
-            mysteryWildsByReels[i] = RandomUtils.randomIndexX(scenario[i]);
+    private static int[] getWildsAsArray(final int[] numberOfWildsByReels) {
+        int[] mysteryWilds = new int[0];
+        for (int reelIndex = 0; reelIndex < numberOfWildsByReels.length; reelIndex++) {
+            if (numberOfWildsByReels[reelIndex] > 0) {
+                final int[] wilds = new int[numberOfWildsByReels[reelIndex]];
+                Arrays.fill(wilds, reelIndex);
+                mysteryWilds = concat(mysteryWilds, wilds);
+            }
         }
-        return mysteryWildsByReels;
+        return mysteryWilds;
     }
 
-    private static int[] pickMysteryWildsPositions(final int[] mysteryWildsByReels) {
-        int[] positions = new int[0];
+    private static int[] getNumbersOfWildsByReels() {
+        final int[] numberOfWildsByReels = new int[scenario.length];
+        for (int i = 0; i < scenario.length; i++) {
+            numberOfWildsByReels[i] = RandomUtils.randomIndexX(scenario[i]);
+        }
+        return numberOfWildsByReels;
+    }
+
+    private static Integer[] pickMysteryWildsPositions(final int[] mysteryWildsByReels) {
+        Integer[] positions = new Integer[0];
         for (int i = 0; i < scenario.length; i++) {
             positions = concat(positions, Arrays.copyOfRange(RandomUtils.shuffle(MW_POSITIONS_ON_REELS[i]), 0, mysteryWildsByReels[i]));
         }
         return positions;
     }
 
-    private static Set<Integer> pickAdjacent(final int position, final Set<Integer> picked, final int[] availableWildsByReels) {
+    private static void pickAdjacent(final int position, final Set<Integer> picked, final int[] numberOfWildsByReels) {
 
-        final Set<Integer> result = new HashSet<Integer>();
-        final Set<Integer> adjacent = new HashSet<Integer>(Arrays.asList(toObject(ADJACENT_POSITIONS[position])));
+        final Set<Integer> adjacent = new HashSet<Integer>(Arrays.asList(ADJACENT_POSITIONS[position]));
         final int x = position % NUM_REELS;
 
-        pickAdjacentOnReel(picked, adjacent, availableWildsByReels, x - 1);
-        pickAdjacentOnReel(picked, adjacent, availableWildsByReels, x);
-        pickAdjacentOnReel(picked, adjacent, availableWildsByReels, x + 1);
+        pickAdjacentOnReel(picked, adjacent, numberOfWildsByReels, x - 1);
+        pickAdjacentOnReel(picked, adjacent, numberOfWildsByReels, x);
+        pickAdjacentOnReel(picked, adjacent, numberOfWildsByReels, x + 1);
 
         System.out.println(toString(picked.toArray(new Integer[picked.size()]), position));
-
-        return result;
     }
 
-    private static void pickAdjacentOnReel(final Set<Integer> picked, final Set<Integer> adjacent, final int[] availableWildsByReels, final int reelIndex) {
+    private static void pickAdjacentOnReel(final Set<Integer> picked, final Set<Integer> adjacent, final int[] numberOfWildsByReels, final int reelIndex) {
         if (reelIndex >= 0 && reelIndex < NUM_REELS) {
             final Set<Integer> pickFrom = new HashSet<Integer>(adjacent);
-            final List<Integer> positionsOnReels = Arrays.asList(toObject(MW_POSITIONS_ON_REELS[reelIndex]));
+            final List<Integer> positionsOnReels = Arrays.asList(MW_POSITIONS_ON_REELS[reelIndex]);
             pickFrom.retainAll(positionsOnReels);
             pickFrom.removeAll(picked);
             System.out.println("Adjacent on " + reelIndex + " reel: " + pickFrom);
 
             final Iterator<Integer> iterator = pickFrom.iterator();
-            while (iterator.hasNext() && availableWildsByReels[reelIndex] > 0) {
+            while (iterator.hasNext() && numberOfWildsByReels[reelIndex] > 0) {
                 final Integer position = iterator.next();
                 iterator.remove();
-                availableWildsByReels[reelIndex] = availableWildsByReels[reelIndex] - 1;
+                numberOfWildsByReels[reelIndex] = numberOfWildsByReels[reelIndex] - 1;
                 picked.add(position);
             }
 
@@ -192,6 +193,15 @@ public class MysteryWildShuffle {
         int aLen = a.length;
         int bLen = b.length;
         int[] c = new int[aLen + bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
+
+    private static Integer[] concat(Integer[] a, Integer[] b) {
+        int aLen = a.length;
+        int bLen = b.length;
+        Integer[] c = new Integer[aLen + bLen];
         System.arraycopy(a, 0, c, 0, aLen);
         System.arraycopy(b, 0, c, aLen, bLen);
         return c;
