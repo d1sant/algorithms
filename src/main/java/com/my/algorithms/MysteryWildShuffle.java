@@ -1,10 +1,13 @@
 package com.my.algorithms;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.my.algorithms.tools.RandomUtils;
 import com.my.algorithms.tools.Randoms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -55,15 +58,16 @@ public class MysteryWildShuffle {
     public static void main(String[] args) {
 
         // generateMysteryWildsInMG();
-        generateMysteryWildsInFG(new int[]{3, 3, 3, 3, 3});
-        // generateMysteryWildsInFG(new int[]{1, 0, 3, 1, 3});
-
         // generateMysteryWildsInFG();
+        // generateMysteryWildsInFG(new int[]{3, 3, 3, 3, 3});
+
+        generateMysteryWildsInFG(new int[]{1, 0, 3, 1, 3});
+
     }
 
     private static void generateMysteryWildsInMG() {
 
-        final int[] mysteryWildsByReels = getNumbersOfWildsByReels();
+        final int[] mysteryWildsByReels = getNumberOfWildsByReelsAsArray();
         final Integer[] mysteryWildsPositions = pickMysteryWildsPositions(mysteryWildsByReels);
 
         System.out.println("=== Mystery Wilds in Main Game ===\n");
@@ -79,24 +83,26 @@ public class MysteryWildShuffle {
     }
 
     private static void generateMysteryWildsInFG() {
-        generateMysteryWildsInFG(getNumbersOfWildsByReels());
+        generateMysteryWildsInFG(getNumberOfWildsByReelsAsArray());
     }
 
-    private static void generateMysteryWildsInFG(final int[] numberOfWildsByReels) {
+    private static void generateMysteryWildsInFG(final int[] numberOfWildsByReelsAsArray) {
 
         System.out.println("=== Mystery Wilds in Free Game ===\n");
-        System.out.println("Number of MW on reels: " + Arrays.toString(numberOfWildsByReels) + "\n");
+        System.out.println("Number of MW on reels: " + Arrays.toString(numberOfWildsByReelsAsArray) + "\n");
+
+        final Multimap<Integer, Integer> numberOfWildsByReels = getNumberOfWildsByReels(numberOfWildsByReelsAsArray);
 
         final Set<Integer> pickedWilds = new HashSet<Integer>(MW_POSITIONS.length);
 
         int iteration = 0;
-        while (size(numberOfWildsByReels) > 0) {
+        while (numberOfWildsByReels.size() > 0) {
 
             System.out.println("----- Iteration " + ++iteration + " -----\n");
 
             // Mystery wilds in array (for uniform pick)
-            final int[] mysteryWilds = getWildsAsArray(numberOfWildsByReels);
-            System.out.println("Mystery wilds: " + Arrays.toString(mysteryWilds));
+            final Integer[] mysteryWilds = numberOfWildsByReels.values().toArray(new Integer[numberOfWildsByReels.size()]);
+            System.out.println("Mystery wilds: " + numberOfWildsByReels.values());
 
             // Pick uniformly one random wild
             final int mysteryWildReel = mysteryWilds[Randoms.randInt(0, mysteryWilds.length)];
@@ -108,7 +114,7 @@ public class MysteryWildShuffle {
             pickedWilds.add(position);
 
             // Decrease number of numberOfWildsByReels
-            numberOfWildsByReels[mysteryWildReel] = numberOfWildsByReels[mysteryWildReel] - 1;
+            decreaseNumberOfWilds(numberOfWildsByReels, mysteryWildReel);
 
             System.out.println("Pivot: " + position);
             System.out.println("Picked: " + pickedWilds + "\n");
@@ -121,32 +127,30 @@ public class MysteryWildShuffle {
         }
     }
 
-    private static int size(final int[] numberOfWildsByReels) {
-        int size = 0;
-        for (final int wildsOnReel : numberOfWildsByReels) {
-            size += wildsOnReel;
+    private static void decreaseNumberOfWilds(final Multimap<Integer, Integer> numberOfWildsByReels, final int reelIndex) {
+        final Iterator<Integer> iterator = numberOfWildsByReels.get(reelIndex).iterator();
+        if (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
         }
-        return size;
     }
 
-    private static int[] getWildsAsArray(final int[] numberOfWildsByReels) {
-        int[] mysteryWilds = new int[0];
-        for (int reelIndex = 0; reelIndex < numberOfWildsByReels.length; reelIndex++) {
-            if (numberOfWildsByReels[reelIndex] > 0) {
-                final int[] wilds = new int[numberOfWildsByReels[reelIndex]];
-                Arrays.fill(wilds, reelIndex);
-                mysteryWilds = concat(mysteryWilds, wilds);
-            }
-        }
-        return mysteryWilds;
-    }
-
-    private static int[] getNumbersOfWildsByReels() {
+    private static int[] getNumberOfWildsByReelsAsArray() {
         final int[] numberOfWildsByReels = new int[scenario.length];
         for (int i = 0; i < scenario.length; i++) {
             numberOfWildsByReels[i] = RandomUtils.randomIndexX(scenario[i]);
         }
         return numberOfWildsByReels;
+    }
+
+    private static Multimap<Integer, Integer> getNumberOfWildsByReels(final int[] numberOfWildsByReels) {
+        final Multimap<Integer, Integer> numberOfWildsByReelsMap = ArrayListMultimap.create(5, 3);
+        for (int reelIndex = 0; reelIndex < numberOfWildsByReels.length; reelIndex++) {
+            if (numberOfWildsByReels[reelIndex] > 0) {
+                numberOfWildsByReelsMap.putAll(reelIndex, Collections.nCopies(numberOfWildsByReels[reelIndex], reelIndex));
+            }
+        }
+        return numberOfWildsByReelsMap;
     }
 
     private static Integer[] pickMysteryWildsPositions(final int[] mysteryWildsByReels) {
@@ -157,7 +161,7 @@ public class MysteryWildShuffle {
         return positions;
     }
 
-    private static void pickAdjacent(final int position, final Set<Integer> picked, final int[] numberOfWildsByReels) {
+    private static void pickAdjacent(final int position, final Set<Integer> picked, final Multimap<Integer, Integer> numberOfWildsByReels) {
 
         final Set<Integer> adjacent = new HashSet<Integer>(Arrays.asList(ADJACENT_POSITIONS[position]));
         final int x = position % NUM_REELS;
@@ -169,33 +173,23 @@ public class MysteryWildShuffle {
         System.out.println(toString(picked.toArray(new Integer[picked.size()]), position));
     }
 
-    private static void pickAdjacentOnReel(final Set<Integer> picked, final Set<Integer> adjacent, final int[] numberOfWildsByReels, final int reelIndex) {
+    private static void pickAdjacentOnReel(final Set<Integer> picked, final Set<Integer> adjacent, final Multimap<Integer, Integer> numberOfWildsByReels, final int reelIndex) {
         if (reelIndex >= 0 && reelIndex < NUM_REELS) {
             final Set<Integer> pickFrom = new HashSet<Integer>(adjacent);
-            final List<Integer> positionsOnReels = Arrays.asList(MW_POSITIONS_ON_REELS[reelIndex]);
-            pickFrom.retainAll(positionsOnReels);
+            pickFrom.retainAll(Arrays.asList(MW_POSITIONS_ON_REELS[reelIndex]));
             pickFrom.removeAll(picked);
             System.out.println("Adjacent on " + reelIndex + " reel: " + pickFrom);
 
             final Iterator<Integer> iterator = pickFrom.iterator();
-            while (iterator.hasNext() && numberOfWildsByReels[reelIndex] > 0) {
+            while (iterator.hasNext() && numberOfWildsByReels.get(reelIndex).size() > 0) {
                 final Integer position = iterator.next();
                 iterator.remove();
-                numberOfWildsByReels[reelIndex] = numberOfWildsByReels[reelIndex] - 1;
+                decreaseNumberOfWilds(numberOfWildsByReels, reelIndex);
                 picked.add(position);
             }
 
             System.out.println("Picked after " + reelIndex + " : " + picked + "\n");
         }
-    }
-
-    private static int[] concat(int[] a, int[] b) {
-        int aLen = a.length;
-        int bLen = b.length;
-        int[] c = new int[aLen + bLen];
-        System.arraycopy(a, 0, c, 0, aLen);
-        System.arraycopy(b, 0, c, aLen, bLen);
-        return c;
     }
 
     private static Integer[] concat(Integer[] a, Integer[] b) {
