@@ -13,8 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static com.my.algorithms.tools.Arrays.toObject;
-
 public class MysteryWildShuffle {
 
     private static final double[] SCENARIO_W_MG_1 = {0.01, 0.24, 0.05, 0.7};
@@ -57,21 +55,20 @@ public class MysteryWildShuffle {
 
     public static void main(String[] args) {
 
-        // generateMysteryWildsInMG();
-        // generateMysteryWildsInFG();
         // generateMysteryWildsInFG(new int[]{3, 3, 3, 3, 3});
+        // generateMysteryWildsInFG(new int[]{1, 0, 3, 1, 3});
 
-        generateMysteryWildsInFG(new int[]{1, 0, 3, 1, 3});
-
+        generateMysteryWildsInMG();
+        generateMysteryWildsInFG();
     }
 
     private static void generateMysteryWildsInMG() {
 
-        final int[] mysteryWildsByReels = getNumberOfWildsByReelsAsArray();
-        final Integer[] mysteryWildsPositions = pickMysteryWildsPositions(mysteryWildsByReels);
+        final int[] numberOfWildsByReels = getNumberOfWildsByReelsAsArray();
+        final Integer[] mysteryWildsPositions = pickWildsPositions(numberOfWildsByReels);
 
         System.out.println("=== Mystery Wilds in Main Game ===\n");
-        System.out.println("Number of MW on reels: " + Arrays.toString(mysteryWildsByReels));
+        System.out.println("Number of MW on reels: " + Arrays.toString(numberOfWildsByReels));
         System.out.println("MW mystery wilds positions: " + Arrays.toString(mysteryWildsPositions));
         System.out.println("\n" + toString(mysteryWildsPositions));
 
@@ -80,6 +77,8 @@ public class MysteryWildShuffle {
             final int y = screenIndex / NUM_REELS;
             System.out.println(x + " : " + y);
         }
+
+        System.out.println("\n=== Main Game END ===\n");
     }
 
     private static void generateMysteryWildsInFG() {
@@ -105,16 +104,16 @@ public class MysteryWildShuffle {
             System.out.println("Mystery wilds: " + numberOfWildsByReels.values());
 
             // Pick uniformly one random wild
-            final int mysteryWildReel = mysteryWilds[Randoms.randInt(0, mysteryWilds.length)];
+            final int reelIndex = mysteryWilds[Randoms.randInt(0, mysteryWilds.length)];
 
             // Pick uniformly position on the reel
-            final Set<Integer> wildsOnReel = new HashSet<Integer>(Arrays.asList(MW_POSITIONS_ON_REELS[mysteryWildReel]));
+            final Set<Integer> wildsOnReel = new HashSet<Integer>(Arrays.asList(MW_POSITIONS_ON_REELS[reelIndex]));
             wildsOnReel.removeAll(pickedWilds);
             final int position = wildsOnReel.toArray(new Integer[wildsOnReel.size()])[Randoms.randInt(0, wildsOnReel.size())];
             pickedWilds.add(position);
 
             // Decrease number of numberOfWildsByReels
-            decreaseNumberOfWilds(numberOfWildsByReels, mysteryWildReel);
+            decrementNumberOfWilds(numberOfWildsByReels, reelIndex);
 
             System.out.println("Pivot: " + position);
             System.out.println("Picked: " + pickedWilds + "\n");
@@ -125,9 +124,10 @@ public class MysteryWildShuffle {
 
             pickAdjacent(position, pickedWilds, numberOfWildsByReels);
         }
+        System.out.println("=== Free Game END ===");
     }
 
-    private static void decreaseNumberOfWilds(final Multimap<Integer, Integer> numberOfWildsByReels, final int reelIndex) {
+    private static void decrementNumberOfWilds(final Multimap<Integer, Integer> numberOfWildsByReels, final int reelIndex) {
         final Iterator<Integer> iterator = numberOfWildsByReels.get(reelIndex).iterator();
         if (iterator.hasNext()) {
             iterator.next();
@@ -153,12 +153,13 @@ public class MysteryWildShuffle {
         return numberOfWildsByReelsMap;
     }
 
-    private static Integer[] pickMysteryWildsPositions(final int[] mysteryWildsByReels) {
-        Integer[] positions = new Integer[0];
+    private static Integer[] pickWildsPositions(final int[] numberOfWildsByReels) {
+        final List<Integer> positions = new ArrayList<Integer>(MW_POSITIONS.length);
         for (int i = 0; i < scenario.length; i++) {
-            positions = concat(positions, Arrays.copyOfRange(RandomUtils.shuffle(MW_POSITIONS_ON_REELS[i]), 0, mysteryWildsByReels[i]));
+            final Integer[] positionsOnReel = Arrays.copyOfRange(RandomUtils.shuffle(MW_POSITIONS_ON_REELS[i]), 0, numberOfWildsByReels[i]);
+            positions.addAll(Arrays.asList(positionsOnReel));
         }
-        return positions;
+        return positions.toArray(new Integer[positions.size()]);
     }
 
     private static void pickAdjacent(final int position, final Set<Integer> picked, final Multimap<Integer, Integer> numberOfWildsByReels) {
@@ -184,29 +185,12 @@ public class MysteryWildShuffle {
             while (iterator.hasNext() && numberOfWildsByReels.get(reelIndex).size() > 0) {
                 final Integer position = iterator.next();
                 iterator.remove();
-                decreaseNumberOfWilds(numberOfWildsByReels, reelIndex);
+                decrementNumberOfWilds(numberOfWildsByReels, reelIndex);
                 picked.add(position);
             }
 
             System.out.println("Picked after " + reelIndex + " : " + picked + "\n");
         }
-    }
-
-    private static Integer[] concat(Integer[] a, Integer[] b) {
-        int aLen = a.length;
-        int bLen = b.length;
-        Integer[] c = new Integer[aLen + bLen];
-        System.arraycopy(a, 0, c, 0, aLen);
-        System.arraycopy(b, 0, c, aLen, bLen);
-        return c;
-    }
-
-    private static String toString(final int[] wilds) {
-        return toString(toObject(wilds));
-    }
-
-    private static String toString(final int[] wilds, final Integer pivot) {
-        return toString(toObject(wilds), pivot);
     }
 
     private static String toString(final Integer[] wilds) {

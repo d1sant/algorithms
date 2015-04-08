@@ -65,4 +65,22 @@ public class Arrays {
         }
         return result;
     }
+
+    public static int[] concat(int[] a, int[] b) {
+        final int aLen = a.length;
+        final int bLen = b.length;
+        final int[] c = new int[aLen + bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
+
+    public static Integer[] concat(Integer[] a, Integer[] b) {
+        final int aLen = a.length;
+        final int bLen = b.length;
+        final Integer[] c = new Integer[aLen + bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
 }
