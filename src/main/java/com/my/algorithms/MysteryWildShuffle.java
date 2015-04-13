@@ -91,7 +91,6 @@ public class MysteryWildShuffle {
         System.out.println("Number of MW on reels: " + Arrays.toString(numberOfWildsByReelsAsArray) + "\n");
 
         final Multimap<Integer, Integer> numberOfWildsByReels = getNumberOfWildsByReels(numberOfWildsByReelsAsArray);
-
         final Set<Integer> pickedWilds = new HashSet<Integer>(MW_POSITIONS.length);
 
         int iteration = 0;
