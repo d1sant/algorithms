@@ -49,10 +49,10 @@ public class RandomUtils {
         return 0;
     }
 
-    public static int[] shuffle(int[] t) {
+    public static int[] shuffle(final int[] t) {
         return shuffle(t, t.length);
     }
-    public static int[] shuffle(int[] t, int limit) {
+    public static int[] shuffle(final int[] t, final int limit) {
         final int[] retVal = new int[t.length];
         System.arraycopy(t, 0, retVal, 0, t.length);
 
@@ -68,10 +68,10 @@ public class RandomUtils {
         return retVal;
     }
 
-    public static Integer[] shuffle(Integer[] t) {
+    public static Integer[] shuffle(final Integer[] t) {
         return shuffle(t, t.length);
     }
-    public static Integer[] shuffle(Integer[] t, int limit) {
+    public static Integer[] shuffle(final Integer[] t, final int limit) {
         final Integer[] retVal = new Integer[t.length];
         System.arraycopy(t, 0, retVal, 0, t.length);
 
