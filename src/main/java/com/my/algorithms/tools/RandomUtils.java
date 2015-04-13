@@ -53,15 +53,15 @@ public class RandomUtils {
         return shuffle(t, t.length);
     }
     public static int[] shuffle(int[] t, int limit) {
-        int[] retVal = new int[t.length];
+        final int[] retVal = new int[t.length];
         System.arraycopy(t, 0, retVal, 0, t.length);
 
-        int lim = Math.min(retVal.length, limit);
+        final int lim = Math.min(retVal.length, limit);
         for (int i = 0; i < lim; ++i) {
-            int modulo = lim -i;
-            int j = rnd.nextInt(modulo);
-            int x = retVal[i];
-            int xx= retVal[i+j];
+            final int modulo = lim -i;
+            final int j = rnd.nextInt(modulo);
+            final int x = retVal[i];
+            final int xx= retVal[i+j];
             retVal[i] = xx;
             retVal[i+j] = x;
         }
@@ -72,15 +72,15 @@ public class RandomUtils {
         return shuffle(t, t.length);
     }
     public static Integer[] shuffle(Integer[] t, int limit) {
-        Integer[] retVal = new Integer[t.length];
+        final Integer[] retVal = new Integer[t.length];
         System.arraycopy(t, 0, retVal, 0, t.length);
 
-        int lim = Math.min(retVal.length, limit);
+        final int lim = Math.min(retVal.length, limit);
         for (int i = 0; i < lim; ++i) {
-            int modulo = lim -i;
-            int j = rnd.nextInt(modulo);
-            int x = retVal[i];
-            int xx= retVal[i+j];
+            final int modulo = lim - i;
+            final int j = rnd.nextInt(modulo);
+            final Integer x = retVal[i];
+            final Integer xx= retVal[i+j];
             retVal[i] = xx;
             retVal[i+j] = x;
         }
